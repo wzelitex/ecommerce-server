@@ -1,0 +1,662 @@
+[
+  {
+    "_id": {
+      "$oid": "67ca438ff19b1c2ceada1c7a"
+    },
+    "image": "https://www.botaexotica.com/cdn/shop/files/DA-PatronTan-BotasVaquerasparaHombre-BotaVaqueraMexicanaparaHombre-BotasVaqueras.jpg?v=1684544829",
+    "name": "Bota vaquera lomo",
+    "price": 1000,
+    "quantity": -11,
+    "available": true,
+    "description": "Bota vaquera lomo de cocodrilo",
+    "type": "B",
+    "businessId": {
+      "$oid": "67bd3fd5a68b79530e576c79"
+    },
+    "sizes": ["22", "24"],
+    "color": "Negro",
+    "material": "Lomo de cocodrilo",
+    "gender": "M",
+    "typeProduct": "B",
+    "__v": 0,
+    "isDeleted": true
+  },
+  {
+    "_id": {
+      "$oid": "67ca438ff19b1c2ceada1c7b"
+    },
+    "image": "https://www.botaexotica.com/cdn/shop/files/DA-PatronTan-BotasVaquerasparaHombre-BotaVaqueraMexicanaparaHombre-BotasVaqueras.jpg?v=1684544829",
+    "name": "Tenis deportivos hombre",
+    "price": 1200,
+    "quantity": 6,
+    "available": true,
+    "description": "Tenis deportivos para hombre, confort y estilo",
+    "type": "T",
+    "businessId": {
+      "$oid": "67bd3fd5a68b79530e576c79"
+    },
+    "sizes": ["28", "30"],
+    "color": "Azul",
+    "material": "Sintético",
+    "gender": "M",
+    "typeProduct": "T",
+    "__v": 0,
+    "isDeleted": false
+  },
+  {
+    "_id": {
+      "$oid": "67ca438ff19b1c2ceada1c7c"
+    },
+    "image": "https://www.botaexotica.com/cdn/shop/files/DA-PatronTan-BotasVaquerasparaHombre-BotaVaqueraMexicanaparaHombre-BotasVaqueras.jpg?v=1684544829",
+    "name": "Zapatos de tacón mujer",
+    "price": 1500,
+    "quantity": 8,
+    "available": true,
+    "description": "Zapatos de tacón alto de piel para mujer",
+    "type": "Z",
+    "businessId": {
+      "$oid": "67bd3fd5a68b79530e576c79"
+    },
+    "sizes": ["25", "26"],
+    "color": "Rojo",
+    "material": "Cuero",
+    "gender": "F",
+    "typeProduct": "Z",
+    "__v": 0,
+    "isDeleted": false
+  },
+  {
+    "_id": {
+      "$oid": "67ca438ff19b1c2ceada1c7d"
+    },
+    "image": "https://www.botaexotica.com/cdn/shop/files/DA-PatronTan-BotasVaquerasparaHombre-BotaVaqueraMexicanaparaHombre-BotasVaqueras.jpg?v=1684544829",
+    "name": "Bota de lluvia mujer",
+    "price": 800,
+    "quantity": 5,
+    "available": true,
+    "description": "Bota de lluvia resistente para mujer, color verde",
+    "type": "B",
+    "businessId": {
+      "$oid": "67bd3fd5a68b79530e576c79"
+    },
+    "sizes": ["24"],
+    "color": "Verde",
+    "material": "PVC",
+    "gender": "F",
+    "typeProduct": "B",
+    "__v": 0,
+    "isDeleted": false
+  },
+  {
+    "_id": {
+      "$oid": "67ca438ff19b1c2ceada1c7e"
+    },
+    "image": "https://www.botaexotica.com/cdn/shop/files/DA-PatronTan-BotasVaquerasparaHombre-BotaVaqueraMexicanaparaHombre-BotasVaqueras.jpg?v=1684544829",
+    "name": "Zapato oxford",
+    "price": 1300,
+    "quantity": 4,
+    "available": true,
+    "description": "Zapato oxford elegante para hombre, ideal para oficina",
+    "type": "Z",
+    "businessId": {
+      "$oid": "67bd3fd5a68b79530e576c79"
+    },
+    "sizes": ["28", "29", "30"],
+    "color": "Negro",
+    "material": "Cuero",
+    "gender": "M",
+    "typeProduct": "Z",
+    "__v": 0,
+    "isDeleted": false
+  },
+  {
+    "_id": {
+      "$oid": "67ca438ff19b1c2ceada1c7f"
+    },
+    "image": "https://www.botaexotica.com/cdn/shop/files/DA-PatronTan-BotasVaquerasparaHombre-BotaVaqueraMexicanaparaHombre-BotasVaqueras.jpg?v=1684544829",
+    "name": "Bota vaquera lomo",
+    "price": 1000,
+    "quantity": 5,
+    "available": true,
+    "description": "Bota vaquera lomo de cocodrilo",
+    "type": "B",
+    "businessId": {
+      "$oid": "67bd3fd5a68b79530e576c79"
+    },
+    "sizes": ["24"],
+    "color": "Negro",
+    "material": "Lomo de cocodrilo",
+    "gender": "M",
+    "typeProduct": "B",
+    "__v": 0,
+    "isDeleted": false
+  },
+  {
+    "_id": {
+      "$oid": "67ca438ff19b1c2ceada1c80"
+    },
+    "image": "https://www.botaexotica.com/cdn/shop/files/DA-PatronTan-BotasVaquerasparaHombre-BotaVaqueraMexicanaparaHombre-BotasVaqueras.jpg?v=1684544829",
+    "name": "Tenis deportivos hombre",
+    "price": 1200,
+    "quantity": 1,
+    "available": true,
+    "description": "Tenis deportivos para hombre, confort y estilo",
+    "type": "T",
+    "businessId": {
+      "$oid": "67bd3fd5a68b79530e576c79"
+    },
+    "sizes": ["26", "28", "30"],
+    "color": "Azul",
+    "material": "Sintético",
+    "gender": "M",
+    "typeProduct": "T",
+    "__v": 0,
+    "isDeleted": false
+  },
+  {
+    "_id": {
+      "$oid": "67ca438ff19b1c2ceada1c81"
+    },
+    "image": "https://www.botaexotica.com/cdn/shop/files/DA-PatronTan-BotasVaquerasparaHombre-BotaVaqueraMexicanaparaHombre-BotasVaqueras.jpg?v=1684544829",
+    "name": "Zapatos de tacón mujer",
+    "price": 1500,
+    "quantity": 1,
+    "available": true,
+    "description": "Zapatos de tacón alto de piel para mujer",
+    "type": "Z",
+    "businessId": {
+      "$oid": "67bd3fd5a68b79530e576c79"
+    },
+    "sizes": ["24", "25", "26"],
+    "color": "Rojo",
+    "material": "Cuero",
+    "gender": "F",
+    "typeProduct": "Z",
+    "__v": 0,
+    "isDeleted": false
+  },
+  {
+    "_id": {
+      "$oid": "67ca438ff19b1c2ceada1c82"
+    },
+    "image": "https://www.botaexotica.com/cdn/shop/files/DA-PatronTan-BotasVaquerasparaHombre-BotaVaqueraMexicanaparaHombre-BotasVaqueras.jpg?v=1684544829",
+    "name": "Bota de lluvia mujer",
+    "price": 800,
+    "quantity": 20,
+    "available": true,
+    "description": "Bota de lluvia resistente para mujer, color verde",
+    "type": "B",
+    "businessId": {
+      "$oid": "67bd3fd5a68b79530e576c79"
+    },
+    "sizes": ["23", "24"],
+    "color": "Verde",
+    "material": "PVC",
+    "gender": "F",
+    "typeProduct": "B",
+    "__v": 0,
+    "isDeleted": false
+  },
+  {
+    "_id": {
+      "$oid": "67ca438ff19b1c2ceada1c83"
+    },
+    "image": "https://www.botaexotica.com/cdn/shop/files/DA-PatronTan-BotasVaquerasparaHombre-BotaVaqueraMexicanaparaHombre-BotasVaqueras.jpg?v=1684544829",
+    "name": "Zapato oxford hombre",
+    "price": 1300,
+    "quantity": 10,
+    "available": true,
+    "description": "Zapato oxford elegante para hombre, ideal para oficina",
+    "type": "Z",
+    "businessId": {
+      "$oid": "67bd3fd5a68b79530e576c79"
+    },
+    "sizes": ["28", "29", "30"],
+    "color": "Negro",
+    "material": "Cuero",
+    "gender": "M",
+    "typeProduct": "Z",
+    "__v": 0,
+    "isDeleted": false
+  },
+  {
+    "_id": {
+      "$oid": "67ca438ff19b1c2ceada1c84"
+    },
+    "image": "https://www.botaexotica.com/cdn/shop/files/DA-PatronTan-BotasVaquerasparaHombre-BotaVaqueraMexicanaparaHombre-BotasVaqueras.jpg?v=1684544829",
+    "name": "Bota vaquera lomo",
+    "price": 1000,
+    "quantity": 100,
+    "available": true,
+    "description": "Bota vaquera lomo de cocodrilo",
+    "type": "B",
+    "businessId": {
+      "$oid": "67bd3fd5a68b79530e576c79"
+    },
+    "sizes": ["22", "24"],
+    "color": "Negro",
+    "material": "Lomo de cocodrilo",
+    "gender": "M",
+    "typeProduct": "B",
+    "__v": 0,
+    "isDeleted": false
+  },
+  {
+    "_id": {
+      "$oid": "67ca438ff19b1c2ceada1c85"
+    },
+    "image": "https://www.botaexotica.com/cdn/shop/files/DA-PatronTan-BotasVaquerasparaHombre-BotaVaqueraMexicanaparaHombre-BotasVaqueras.jpg?v=1684544829",
+    "name": "Tenis deportivos hombre",
+    "price": 1200,
+    "quantity": 8,
+    "available": true,
+    "description": "Tenis deportivos para hombre, confort y estilo",
+    "type": "T",
+    "businessId": {
+      "$oid": "67bd3fd5a68b79530e576c79"
+    },
+    "sizes": ["26", "28", "30"],
+    "color": "Azul",
+    "material": "Sintético",
+    "gender": "M",
+    "typeProduct": "T",
+    "__v": 0,
+    "isDeleted": false
+  },
+  {
+    "_id": {
+      "$oid": "67ca438ff19b1c2ceada1c86"
+    },
+    "image": "https://www.botaexotica.com/cdn/shop/files/DA-PatronTan-BotasVaquerasparaHombre-BotaVaqueraMexicanaparaHombre-BotasVaqueras.jpg?v=1684544829",
+    "name": "Zapatos de tacón mujer",
+    "price": 1500,
+    "quantity": 10,
+    "available": true,
+    "description": "Zapatos de tacón alto de piel para mujer",
+    "type": "Z",
+    "businessId": {
+      "$oid": "67bd3fd5a68b79530e576c79"
+    },
+    "sizes": ["24", "25", "26"],
+    "color": "Rojo",
+    "material": "Cuero",
+    "gender": "F",
+    "typeProduct": "Z",
+    "__v": 0,
+    "isDeleted": false
+  },
+  {
+    "_id": {
+      "$oid": "67ca438ff19b1c2ceada1c87"
+    },
+    "image": "https://www.botaexotica.com/cdn/shop/files/DA-PatronTan-BotasVaquerasparaHombre-BotaVaqueraMexicanaparaHombre-BotasVaqueras.jpg?v=1684544829",
+    "name": "Bota de lluvia mujer",
+    "price": 800,
+    "quantity": 6,
+    "available": true,
+    "description": "Bota de lluvia resistente para mujer, color verde",
+    "type": "B",
+    "businessId": {
+      "$oid": "67bd3fd5a68b79530e576c79"
+    },
+    "sizes": ["23", "24"],
+    "color": "Verde",
+    "material": "PVC",
+    "gender": "F",
+    "typeProduct": "B",
+    "__v": 0,
+    "isDeleted": false
+  },
+  {
+    "_id": {
+      "$oid": "67ca438ff19b1c2ceada1c88"
+    },
+    "image": "https://www.botaexotica.com/cdn/shop/files/DA-PatronTan-BotasVaquerasparaHombre-BotaVaqueraMexicanaparaHombre-BotasVaqueras.jpg?v=1684544829",
+    "name": "Zapato oxford hombre",
+    "price": 1300,
+    "quantity": 4,
+    "available": true,
+    "description": "Zapato oxford elegante para hombre, ideal para oficina",
+    "type": "Z",
+    "businessId": {
+      "$oid": "67bd3fd5a68b79530e576c79"
+    },
+    "sizes": ["28", "29", "30"],
+    "color": "Negro",
+    "material": "Cuero",
+    "gender": "M",
+    "typeProduct": "Z",
+    "__v": 0,
+    "isDeleted": false
+  },
+  {
+    "_id": {
+      "$oid": "67ca4397f19b1c2ceada1c89"
+    },
+    "image": "https://www.botaexotica.com/cdn/shop/files/DA-PatronTan-BotasVaquerasparaHombre-BotaVaqueraMexicanaparaHombre-BotasVaqueras.jpg?v=1684544829",
+    "name": "Bota vaquera lomo",
+    "price": 1000,
+    "quantity": 5,
+    "available": true,
+    "description": "Bota vaquera lomo de cocodrilo",
+    "type": "B",
+    "businessId": {
+      "$oid": "67bd3fd5a68b79530e576c79"
+    },
+    "sizes": ["22", "24"],
+    "color": "Negro",
+    "material": "Lomo de cocodrilo",
+    "gender": "M",
+    "typeProduct": "B",
+    "__v": 0,
+    "isDeleted": false
+  },
+  {
+    "_id": {
+      "$oid": "67ca4397f19b1c2ceada1c8a"
+    },
+    "image": "https://www.botaexotica.com/cdn/shop/files/DA-PatronTan-BotasVaquerasparaHombre-BotaVaqueraMexicanaparaHombre-BotasVaqueras.jpg?v=1684544829",
+    "name": "Tenis deportivos hombre",
+    "price": 1200,
+    "quantity": 8,
+    "available": true,
+    "description": "Tenis deportivos para hombre, confort y estilo",
+    "type": "T",
+    "businessId": {
+      "$oid": "67bd3fd5a68b79530e576c79"
+    },
+    "sizes": ["26", "28", "30"],
+    "color": "Azul",
+    "material": "Sintético",
+    "gender": "M",
+    "typeProduct": "T",
+    "__v": 0,
+    "isDeleted": false
+  },
+  {
+    "_id": {
+      "$oid": "67ca4397f19b1c2ceada1c8b"
+    },
+    "image": "https://www.botaexotica.com/cdn/shop/files/DA-PatronTan-BotasVaquerasparaHombre-BotaVaqueraMexicanaparaHombre-BotasVaqueras.jpg?v=1684544829",
+    "name": "Zapatos de tacón mujer",
+    "price": 1500,
+    "quantity": 10,
+    "available": true,
+    "description": "Zapatos de tacón alto de piel para mujer",
+    "type": "Z",
+    "businessId": {
+      "$oid": "67bd3fd5a68b79530e576c79"
+    },
+    "sizes": ["24", "25", "26"],
+    "color": "Rojo",
+    "material": "Cuero",
+    "gender": "F",
+    "typeProduct": "Z",
+    "__v": 0,
+    "isDeleted": false
+  },
+  {
+    "_id": {
+      "$oid": "67ca4397f19b1c2ceada1c8c"
+    },
+    "image": "https://www.botaexotica.com/cdn/shop/files/DA-PatronTan-BotasVaquerasparaHombre-BotaVaqueraMexicanaparaHombre-BotasVaqueras.jpg?v=1684544829",
+    "name": "Bota de lluvia mujer",
+    "price": 800,
+    "quantity": 6,
+    "available": true,
+    "description": "Bota de lluvia resistente para mujer, color verde",
+    "type": "B",
+    "businessId": {
+      "$oid": "67bd3fd5a68b79530e576c79"
+    },
+    "sizes": ["23", "24"],
+    "color": "Verde",
+    "material": "PVC",
+    "gender": "F",
+    "typeProduct": "B",
+    "__v": 0,
+    "isDeleted": false
+  },
+  {
+    "_id": {
+      "$oid": "67ca4397f19b1c2ceada1c8d"
+    },
+    "image": "https://www.botaexotica.com/cdn/shop/files/DA-PatronTan-BotasVaquerasparaHombre-BotaVaqueraMexicanaparaHombre-BotasVaqueras.jpg?v=1684544829",
+    "name": "Zapato oxford hombre",
+    "price": 1300,
+    "quantity": 4,
+    "available": true,
+    "description": "Zapato oxford elegante para hombre, ideal para oficina",
+    "type": "Z",
+    "businessId": {
+      "$oid": "67bd3fd5a68b79530e576c79"
+    },
+    "sizes": ["28", "29", "30"],
+    "color": "Negro",
+    "material": "Cuero",
+    "gender": "M",
+    "typeProduct": "Z",
+    "__v": 0,
+    "isDeleted": false
+  },
+  {
+    "_id": {
+      "$oid": "67ca4397f19b1c2ceada1c8e"
+    },
+    "image": "https://www.botaexotica.com/cdn/shop/files/DA-PatronTan-BotasVaquerasparaHombre-BotaVaqueraMexicanaparaHombre-BotasVaqueras.jpg?v=1684544829",
+    "name": "Bota vaquera lomo",
+    "price": 1000,
+    "quantity": 5,
+    "available": true,
+    "description": "Bota vaquera lomo de cocodrilo",
+    "type": "B",
+    "businessId": {
+      "$oid": "67bd3fd5a68b79530e576c79"
+    },
+    "sizes": ["22", "24"],
+    "color": "Negro",
+    "material": "Lomo de cocodrilo",
+    "gender": "M",
+    "typeProduct": "B",
+    "__v": 0,
+    "isDeleted": false
+  },
+  {
+    "_id": {
+      "$oid": "67ca4397f19b1c2ceada1c8f"
+    },
+    "image": "https://www.botaexotica.com/cdn/shop/files/DA-PatronTan-BotasVaquerasparaHombre-BotaVaqueraMexicanaparaHombre-BotasVaqueras.jpg?v=1684544829",
+    "name": "Tenis deportivos hombre",
+    "price": 1200,
+    "quantity": 8,
+    "available": true,
+    "description": "Tenis deportivos para hombre, confort y estilo",
+    "type": "T",
+    "businessId": {
+      "$oid": "67bd3fd5a68b79530e576c79"
+    },
+    "sizes": ["26", "28", "30"],
+    "color": "Azul",
+    "material": "Sintético",
+    "gender": "M",
+    "typeProduct": "T",
+    "__v": 0,
+    "isDeleted": false
+  },
+  {
+    "_id": {
+      "$oid": "67ca4397f19b1c2ceada1c90"
+    },
+    "image": "https://www.botaexotica.com/cdn/shop/files/DA-PatronTan-BotasVaquerasparaHombre-BotaVaqueraMexicanaparaHombre-BotasVaqueras.jpg?v=1684544829",
+    "name": "Zapatos de tacón mujer",
+    "price": 1500,
+    "quantity": 10,
+    "available": true,
+    "description": "Zapatos de tacón alto de piel para mujer",
+    "type": "Z",
+    "businessId": {
+      "$oid": "67bd3fd5a68b79530e576c79"
+    },
+    "sizes": ["24", "25", "26"],
+    "color": "Rojo",
+    "material": "Cuero",
+    "gender": "F",
+    "typeProduct": "Z",
+    "__v": 0,
+    "isDeleted": false
+  },
+  {
+    "_id": {
+      "$oid": "67ca4397f19b1c2ceada1c91"
+    },
+    "image": "https://www.botaexotica.com/cdn/shop/files/DA-PatronTan-BotasVaquerasparaHombre-BotaVaqueraMexicanaparaHombre-BotasVaqueras.jpg?v=1684544829",
+    "name": "Bota de lluvia mujer",
+    "price": 800,
+    "quantity": 6,
+    "available": true,
+    "description": "Bota de lluvia resistente para mujer, color verde",
+    "type": "B",
+    "businessId": {
+      "$oid": "67bd3fd5a68b79530e576c79"
+    },
+    "sizes": ["23", "24"],
+    "color": "Verde",
+    "material": "PVC",
+    "gender": "F",
+    "typeProduct": "B",
+    "__v": 0,
+    "isDeleted": false
+  },
+  {
+    "_id": {
+      "$oid": "67ca4397f19b1c2ceada1c92"
+    },
+    "image": "https://www.botaexotica.com/cdn/shop/files/DA-PatronTan-BotasVaquerasparaHombre-BotaVaqueraMexicanaparaHombre-BotasVaqueras.jpg?v=1684544829",
+    "name": "Zapato oxford hombre",
+    "price": 1300,
+    "quantity": 4,
+    "available": true,
+    "description": "Zapato oxford elegante para hombre, ideal para oficina",
+    "type": "Z",
+    "businessId": {
+      "$oid": "67bd3fd5a68b79530e576c79"
+    },
+    "sizes": ["28", "29", "30"],
+    "color": "Negro",
+    "material": "Cuero",
+    "gender": "M",
+    "typeProduct": "Z",
+    "__v": 0,
+    "isDeleted": false
+  },
+  {
+    "_id": {
+      "$oid": "67ca4397f19b1c2ceada1c93"
+    },
+    "image": "https://www.botaexotica.com/cdn/shop/files/DA-PatronTan-BotasVaquerasparaHombre-BotaVaqueraMexicanaparaHombre-BotasVaqueras.jpg?v=1684544829",
+    "name": "Bota vaquera lomo",
+    "price": 1000,
+    "quantity": 5,
+    "available": true,
+    "description": "Bota vaquera lomo de cocodrilo",
+    "type": "B",
+    "businessId": {
+      "$oid": "67bd3fd5a68b79530e576c79"
+    },
+    "sizes": ["22", "24"],
+    "color": "Negro",
+    "material": "Lomo de cocodrilo",
+    "gender": "M",
+    "typeProduct": "B",
+    "__v": 0,
+    "isDeleted": false
+  },
+  {
+    "_id": {
+      "$oid": "67ca4397f19b1c2ceada1c94"
+    },
+    "image": "https://www.botaexotica.com/cdn/shop/files/DA-PatronTan-BotasVaquerasparaHombre-BotaVaqueraMexicanaparaHombre-BotasVaqueras.jpg?v=1684544829",
+    "name": "Tenis deportivos hombre",
+    "price": 1200,
+    "quantity": 8,
+    "available": true,
+    "description": "Tenis deportivos para hombre, confort y estilo",
+    "type": "T",
+    "businessId": {
+      "$oid": "67bd3fd5a68b79530e576c79"
+    },
+    "sizes": ["26", "28", "30"],
+    "color": "Azul",
+    "material": "Sintético",
+    "gender": "M",
+    "typeProduct": "T",
+    "__v": 0,
+    "isDeleted": false
+  },
+  {
+    "_id": {
+      "$oid": "67ca4397f19b1c2ceada1c95"
+    },
+    "image": "https://www.botaexotica.com/cdn/shop/files/DA-PatronTan-BotasVaquerasparaHombre-BotaVaqueraMexicanaparaHombre-BotasVaqueras.jpg?v=1684544829",
+    "name": "Zapatos de tacón mujer",
+    "price": 1500,
+    "quantity": 10,
+    "available": true,
+    "description": "Zapatos de tacón alto de piel para mujer",
+    "type": "Z",
+    "businessId": {
+      "$oid": "67bd3fd5a68b79530e576c79"
+    },
+    "sizes": ["24", "25", "26"],
+    "color": "Rojo",
+    "material": "Cuero",
+    "gender": "F",
+    "typeProduct": "Z",
+    "__v": 0,
+    "isDeleted": false
+  },
+  {
+    "_id": {
+      "$oid": "67ca4397f19b1c2ceada1c96"
+    },
+    "image": "https://www.botaexotica.com/cdn/shop/files/DA-PatronTan-BotasVaquerasparaHombre-BotaVaqueraMexicanaparaHombre-BotasVaqueras.jpg?v=1684544829",
+    "name": "Bota de lluvia mujer",
+    "price": 800,
+    "quantity": 6,
+    "available": true,
+    "description": "Bota de lluvia resistente para mujer, color verde",
+    "type": "B",
+    "businessId": {
+      "$oid": "67bd3fd5a68b79530e576c79"
+    },
+    "sizes": ["23", "24"],
+    "color": "Verde",
+    "material": "PVC",
+    "gender": "F",
+    "typeProduct": "B",
+    "__v": 0,
+    "isDeleted": false
+  },
+  {
+    "_id": {
+      "$oid": "67ca4397f19b1c2ceada1c97"
+    },
+    "image": "https://www.botaexotica.com/cdn/shop/files/DA-PatronTan-BotasVaquerasparaHombre-BotaVaqueraMexicanaparaHombre-BotasVaqueras.jpg?v=1684544829",
+    "name": "Zapato oxford hombre",
+    "price": 1300,
+    "quantity": 4,
+    "available": true,
+    "description": "Zapato oxford elegante para hombre, ideal para oficina",
+    "type": "Z",
+    "businessId": {
+      "$oid": "67bd3fd5a68b79530e576c79"
+    },
+    "sizes": ["28", "29", "30"],
+    "color": "Negro",
+    "material": "Cuero",
+    "gender": "M",
+    "typeProduct": "Z",
+    "__v": 0,
+    "isDeleted": false
+  }
+]
