@@ -6,5 +6,8 @@ steps:
   - name: 'gcr.io/cloud-builders/gcloud'
     args: ['run', 'deploy', 'ecommerce-server',
            '--source=.',
-           '--region=REGION',
+           '--region=us-central1',
            '--allow-unauthenticated']
+
+images:
+  - 'gcr.io/$PROJECT_ID/ecommerce-server:v1'
