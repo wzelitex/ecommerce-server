@@ -27,7 +27,7 @@ export interface ClientProductsServiceInterface {
    * @param id - The user ID.
    * @returns A promise resolving to a common response containing recommended products.
    */
-  findProductsRecommendSearcher(id: string): Promise<CommonResponseInterface>;
+  findProductsRecommendSearcher(id: string);
 
   /**
    * Searches for products based on a text query.

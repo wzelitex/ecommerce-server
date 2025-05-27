@@ -40,14 +40,6 @@ export class ClientUsersController {
     return this.clientUsersService.getBusinessRecommend(req.user.userId);
   }
 
-  @Get('get/about-us/business')
-  getAboutUsBusiness(
-    @Query('id') id: string,
-    @Query('type') type: 'large' | 'short',
-  ) {
-    return this.clientUsersService.getAboutUsData(id, type);
-  }
-
   @Patch('put/info')
   putInfo(@Req() req: Request, @Body() data: UpdateUsersDto) {
     return this.clientUsersService.putInfo(req.user.userId, data);
@@ -60,7 +52,7 @@ export class ClientUserNoProtectedController {
 
   @Get('get/header/data')
   getHeaderData(@Query('id') id: string) {
-    return this.clientUsersService.getHeaderData(id);
+    return this.clientUsersService.getHomePageBusiness(id);
   }
 
   @Get('get/random/business')

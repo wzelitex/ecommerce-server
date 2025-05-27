@@ -1,5 +1,5 @@
 import { Schema, Prop, SchemaFactory } from '@nestjs/mongoose';
-import { IsNotEmpty, IsString, IsNumber } from 'class-validator';
+import { IsString } from 'class-validator';
 import { Document, Types } from 'mongoose';
 
 // Esquema base de los usuarios
@@ -76,11 +76,11 @@ export class UserBusinessSchema extends UserClientSchema {
   /* Redes Sociales */
 
   @IsString()
-  @Prop({ required: true })
+  @Prop({ required: false, default: '' })
   image: string;
 
   @IsString()
-  @Prop({ required: true })
+  @Prop({ required: false, default: '' })
   description: string;
 
   @IsString()
@@ -98,35 +98,6 @@ export class UserBusinessSchema extends UserClientSchema {
   @IsString()
   @Prop({ type: String, required: false, default: '' })
   tiktok: string;
-
-  /* about-us */
-  @Prop({ required: true })
-  aboutUs: string;
-
-  @Prop({ required: true })
-  exteriorImage: string;
-
-  @Prop({ required: true })
-  interiorImage: string;
-
-  @Prop({ required: true })
-  values: string[];
-
-  /* Parámetro adicional */
-  @IsString()
-  @IsNotEmpty()
-  @Prop({ required: true })
-  deliveryType: string;
-
-  @IsString()
-  @IsNotEmpty()
-  @Prop({ required: true })
-  deliveryTime: number;
-
-  @IsNumber()
-  @IsNotEmpty()
-  @Prop({ type: Number, required: true, default: 0 })
-  deleveryAmount: number;
 }
 
 export const UserBusinessSchemaFactory =

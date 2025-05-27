@@ -55,19 +55,19 @@ export class ClientOrdersService implements ClientOrdersServiceInterface {
 
     const user = await this.usersService.getInfoPayer(userId);
 
-    const preferenceId = await this.paymentsService.createPreference(
-      newArray,
-      user,
-    );
+    // const preferenceId = await this.paymentsService.createPreference(
+    //   newArray,
+    //   user,
+    // );
 
-    console.log('preference: ', preferenceId);
+    // console.log('preference: ', preferenceId);
 
     await this.shoppingsService.deleteShoppingsFromCart(userId);
 
     return this.responseService.success(
       201,
       'Pedidos creados exitosamente.',
-      preferenceId,
+      // preferenceId,
     );
   }
 }

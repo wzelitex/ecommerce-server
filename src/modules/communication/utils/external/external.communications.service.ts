@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { SanitizeService } from 'src/modules/utils/services/sanitize.service';
-import nodemailer from 'nodemailer';
+import * as nodemailer from 'nodemailer';
 import { RequestContactInterface } from '../../interfaces/functions/functions.post.communication';
 
 const keyApp = 'ndva tqvc ydqr ljhu'; // reemplázalo o cárgalo desde un .env
@@ -22,7 +22,7 @@ export class ExternalCommunicationsService {
   async sendBulkNotifications(notifications: RequestContactInterface[]) {
     for (const notification of notifications) {
       try {
-        const sanitizedEmail = this.sanitizeEmailsService.sanitizeAllString(
+        const sanitizedEmail = this.sanitizeEmailsService.sanitizeString(
           notification.to,
         );
 

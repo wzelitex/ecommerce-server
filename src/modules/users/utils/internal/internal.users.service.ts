@@ -10,18 +10,19 @@ export class InternalUsersService {
     private readonly businessModel: Model<UserBusinessSchema>,
   ) {}
 
-  async getAboutBusiness(id: string, type: 'short' | 'large') {
-    const Id = new Types.ObjectId(id);
-
-    if (type === 'short') {
-      return this.businessModel.findById(Id, { _id: 0, values: 1 });
-    }
-
-    return this.businessModel.findById(Id, {
-      aboutUs: 1,
-      values: 1,
-      exteriorImage: 1,
-      interiorImage: 1,
+  async getHeaderData(id: string) {
+    return this.businessModel.findById(new Types.ObjectId(id), {
+      name: 1,
+      image: 1,
+      _id: 1,
+      description: 1,
+      street: 1,
+      state: 1,
+      cologne: 1,
+      municipality: 1,
+      country: 1,
+      number: 1,
+      zipCode: 1,
     });
   }
 }

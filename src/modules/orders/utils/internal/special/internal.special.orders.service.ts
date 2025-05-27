@@ -16,7 +16,7 @@ export class InternalSpecialOrdersService {
   async createObjectPreferenceId(
     data: OrdersInterfaceIdPopulated[],
     userId: string,
-  ): Promise<InterfaceItemsPaymet[]> {
+  ) {
     const user = await this.usersService.getUserInfoForCreateOrders(userId);
     if (!user) return;
 

@@ -1,6 +1,5 @@
 import { CommonResponseInterface } from 'src/interface/response.interface';
 import { ClientInterface } from '../../interface/users.interface';
-import { UserBusinessSchema } from '../../schema/users.schema';
 
 /**
  * Interface defining the structure for client user operations.
@@ -35,14 +34,6 @@ export interface ClientUsersServiceInterface {
   ): Promise<CommonResponseInterface>;
 
   /**
-   * Retrieves basic header data for a client user.
-   *
-   * @param {string} id - ID of the client user.
-   * @returns {Promise<CommonResponseInterface>} - Response with name and image.
-   */
-  getHeaderData(id: string): Promise<CommonResponseInterface>;
-
-  /**
    * Searches businesses by name.
    *
    * @param {string} text - The search query.
@@ -53,19 +44,6 @@ export interface ClientUsersServiceInterface {
     text: string,
     offset: string,
   ): Promise<CommonResponseInterface>;
-
-  /**
-   *  Retrivies about-us data
-   *
-   * @param {string} id - id to search business document
-   * @param {string} type - type of size of document
-   *
-   * @return {Promise<UserBusinessSchema>} - return data found
-   * **/
-  getAboutUsData(
-    id: string,
-    type: 'short' | 'large',
-  ): Promise<CommonResponseInterface<UserBusinessSchema>>;
 
   /**
    * Retrieves a random list of businesses.

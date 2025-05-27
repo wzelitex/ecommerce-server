@@ -65,3 +65,24 @@ export class UpdateDataSecitonDto {
   @IsString()
   aboutUs: string;
 }
+
+/* update info delivery */
+export class UpdateInfoDeliveryDto extends AddLocationUserDto {
+  @IsString()
+  name: string;
+
+  @IsString()
+  email: string;
+
+  @IsString()
+  password: string;
+
+  @IsNumber()
+  phone: number;
+
+  @IsNumber()
+  lada: number;
+
+  @IsString()
+  image: string;
+}

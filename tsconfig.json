@@ -1,26 +1,22 @@
 {
   "compilerOptions": {
-    "typeRoots": ["./node_modules/@types", "./src/types"],
     "module": "commonjs",
     "declaration": true,
     "removeComments": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "allowSyntheticDefaultImports": true,
-    "target": "ES2021",
+    "target": "ES2023",
     "sourceMap": true,
-    "outDir": ".vscode/dist",
+    "outDir": "./dist",
     "baseUrl": "./",
     "incremental": true,
     "skipLibCheck": true,
-    "strictNullChecks": false,
+    "strictNullChecks": true,
+    "forceConsistentCasingInFileNames": true,
     "noImplicitAny": false,
     "strictBindCallApply": false,
-    "forceConsistentCasingInFileNames": false,
-    "noFallthroughCasesInSwitch": false,
-    "resolveJsonModule": true,
-    "esModuleInterop": true,
-    "skipDefaultLibCheck": true
+    "noFallthroughCasesInSwitch": false
   },
   "include": [
     "src/**/*.ts",

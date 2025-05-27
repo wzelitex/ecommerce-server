@@ -7,24 +7,47 @@ import {
 } from '../../interface/payment.interfac';
 import { ExternalProductsService } from 'src/modules/products/utils/external/external.products.service';
 import { OrderSchema } from 'src/modules/orders/schema/orders.schema';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
+import { PaymentCredentialsSchema } from '../../schema/payment.credentials.schema';
 
 @Injectable()
 export class ExternalPaymentsService {
   private readonly client: MercadoPagoConfig;
 
   constructor(
+    @InjectModel('credentials_payment')
+    private readonly paymentsCredentialsModel: Model<PaymentCredentialsSchema>,
     private readonly responseService: ResponseService,
     private readonly productsService: ExternalProductsService,
   ) {}
 
+  private async getAccessTokenForBusiness(businessId: string) {
+    return await this.paymentsCredentialsModel.findOne({
+      businessId: businessId,
+    });
+  }
+
   async createPreference(
     orders: InterfaceItemsPaymet[],
     payer: InterfacePayerPayment,
+    businessId: string,
   ) {
-    /* total calculated */
     const totalAmount = orders.reduce((acc, item) => acc + item.price, 0);
+    const credentials = await this.getAccessTokenForBusiness(businessId);
+    const accessToken = credentials?.accessToken;
+
+    if (!accessToken) {
+      return this.responseService.error(
+        400,
+        'No se encontró access_token para el negocio.',
+      );
+    }
 
     try {
+      const mpClient = new MercadoPagoConfig({ accessToken });
+      const preference = new Preference(mpClient);
+
       const body = {
         items: orders.map((item) => ({
           title: item.name,
@@ -64,7 +87,6 @@ export class ExternalPaymentsService {
         },
       };
 
-      const preference = new Preference(this.client);
       return await preference.create({ body });
     } catch (error) {
       this.responseService.error(
@@ -86,7 +108,7 @@ export class ExternalPaymentsService {
       if (!product) continue;
 
       const newDocument: InterfaceItemsPaymet = {
-        _id: order._id.toString(),
+        _id: order._id!.toString(),
         name: product.name,
         price: order.total / order.quantity,
         quantity: order.quantity,

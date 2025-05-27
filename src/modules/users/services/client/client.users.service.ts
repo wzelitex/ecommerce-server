@@ -11,14 +11,16 @@ import { ClientInterface } from '../../interface/users.interface';
 import { BusinessUsersService } from '../business/business.users.service';
 import { ClientUsersServiceInterface } from '../../interface/services/client.users.interface';
 import { ExternalShoppingsService } from 'src/modules/shoppings/utils/external/external.shoppings.service';
-import { CommonResponseInterface } from 'src/interface/response.interface';
 import { InternalUsersService } from '../../utils/internal/internal.users.service';
+import { GetBusinessRecommendInterface } from '../../interface/arrays/clients.arrays.interface';
 
 @Injectable()
 export class ClientUsersService implements ClientUsersServiceInterface {
   constructor(
     @InjectModel('Client')
     private readonly usersModel: Model<UserClientSchema>,
+    @InjectModel('Business')
+    private readonly businessModel: Model<UserBusinessSchema>,
     private readonly responseService: ResponseService,
     private readonly sanitizeService: SanitizeService,
     private readonly businessUsersService: BusinessUsersService,
@@ -44,12 +46,6 @@ export class ClientUsersService implements ClientUsersServiceInterface {
     return this.responseService.success(200, 'Usuario actualizado.');
   }
 
-  async getHeaderData(id: string) {
-    const data = await this.businessUsersService.getHeaderData(id);
-    if (!data) return this.responseService.error(404, 'Negocio no encontrado.');
-    return this.responseService.success(200, 'Negocio encontrado.', data);
-  }
-
   async getBusinessSearcher(text: string, offset: string) {
     const business = await this.businessUsersService.getBusinessSearcher(
       text,
@@ -68,7 +64,7 @@ export class ClientUsersService implements ClientUsersServiceInterface {
   }
 
   async getBusinessRecommend(id: string) {
-    const businesses = [];
+    const businesses: GetBusinessRecommendInterface[] = [];
 
     const shoppingsBought =
       await this.shoppingsService.getBusinessRecommend(id);
@@ -79,12 +75,21 @@ export class ClientUsersService implements ClientUsersServiceInterface {
       );
 
     for (const shopping of shoppingsBought) {
-      const business = await this.usersModel.findById(shopping.businessId, {
-        image: 1,
-        _id: 1,
-        name: 1,
-      });
-      if (!business) continue;
+      const rawBusiness = await this.businessModel
+        .findById(shopping.businessId, {
+          image: 1,
+          _id: 1,
+          name: 1,
+        })
+        .lean();
+
+      if (!rawBusiness) continue;
+
+      const business: GetBusinessRecommendInterface = {
+        name: rawBusiness.name,
+        image: rawBusiness.image,
+      };
+
       businesses.push(business);
     }
 
@@ -97,17 +102,9 @@ export class ClientUsersService implements ClientUsersServiceInterface {
     );
   }
 
-  async getAboutUsData(
-    id: string,
-    type: 'short' | 'large',
-  ): Promise<CommonResponseInterface<UserBusinessSchema>> {
-    const user = await this.internalService.getAboutBusiness(id, type);
-
-    if (!user) return this.responseService.error(404, 'Negocio no encontrado.');
-    return this.responseService.success<UserBusinessSchema>(
-      200,
-      'Negocio encontrado.',
-      user,
-    );
+  async getHomePageBusiness(id: string) {
+    const business = await this.internalService.getHeaderData(id);
+    if (!business) return this.responseService.error(404, 'Business no found.');
+    return this.responseService.success(200, 'Business found.', business);
   }
 }

@@ -57,4 +57,37 @@ export class ExternalProductsService {
 
     return true;
   }
+
+  async getProductsSearched(text: string, offset: string) {
+    return await this.productModel.aggregate([
+      {
+        $match: {
+          $or: [
+            { name: { $regex: text, $options: 'i' } },
+            { description: { $regex: text, $options: 'i' } },
+          ],
+        },
+      },
+      {
+        $lookup: {
+          from: 'businesses',
+          localField: 'businessId',
+          foreignField: '_id',
+          as: 'businessId',
+        },
+      },
+      { $unwind: '$businessId' },
+      {
+        $project: {
+          name: 1,
+          price: 1,
+          image: 1,
+          'businessId.name': 1,
+          score: { $meta: 'textScore' },
+        },
+      },
+      { $sort: { score: -1 } },
+      { $limit: 15 },
+    ]);
+  }
 }

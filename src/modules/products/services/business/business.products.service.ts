@@ -3,10 +3,11 @@ import { Model, Types } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 import { ProductShoeSchema } from '../../schema/product.schema';
 import { ResponseService } from 'src/modules/utils/services/response.service';
-import { ImageService } from 'src/modules/utils/services/image.service';
+import { CloudinaryService } from 'src/modules/utils/services/image.service';
 import { SanitizeService } from 'src/modules/utils/services/sanitize.service';
 import { BusinessProductsServiceInterface } from '../../interface/services/business.products.interface';
 import { CreateProductShoeInterface } from '../../interface/functions/business/business.functions.products.interface';
+import { UpdateProductShoeDto } from '../../dto/products.dto';
 
 @Injectable()
 export class BusinessProductsService
@@ -16,19 +17,11 @@ export class BusinessProductsService
     @InjectModel('Shoe')
     private readonly productsModel: Model<ProductShoeSchema>,
     private readonly responseService: ResponseService,
-    private readonly imageService: ImageService,
+    private readonly imageService: CloudinaryService,
     private readonly sanitizeService: SanitizeService,
   ) {}
 
   private readonly limitDocument = 10;
-
-  private sanitizeData(data: CreateProductShoeInterface) {
-    this.sanitizeService.sanitizeString(data.name);
-    this.sanitizeService.sanitizeString(data.description);
-    this.sanitizeService.sanitizeString(data.material);
-
-    return data;
-  }
 
   async findAll(
     id: string,
@@ -62,26 +55,16 @@ export class BusinessProductsService
     return this.responseService.success(200, 'Producto encontrados.', product);
   }
 
-  async putProduct(
-    id: string,
-    data: CreateProductShoeInterface,
-    image: Express.Multer.File,
-    userId: string,
-  ) {
-    if (data._id) {
-      delete data._id;
-    }
+  async putProduct(id: string, userId: string, data: UpdateProductShoeDto) {
+    this.sanitizeService.sanitizeAllString(data);
 
-    this.sanitizeData(data);
     const product = await this.productsModel.findByIdAndUpdate(
       id,
       {
         ...data,
         businessId: new Types.ObjectId(userId),
       },
-      {
-        new: true,
-      },
+      { new: true },
     );
 
     if (!product)
@@ -90,25 +73,19 @@ export class BusinessProductsService
   }
 
   async createProduct(
+    businessId: string,
     data: CreateProductShoeInterface,
     file: Express.Multer.File,
-    businessId: string,
   ) {
-    // const urlImage = await this.imageService.uploadFile(file);
-    const urlImage = 'https://google.images/' + Date.now();
-    this.sanitizeData(data);
-
-    const arraySizes = data.size.split(',').map((size) => size.trim());
-    this.sanitizeService.sanitizeArray(arraySizes);
-
+    const urlImage = await this.imageService.uploadFile(file, 'products');
+    const sizes = JSON.parse(data.size) as string;
     const newProduct = new this.productsModel({
       ...data,
-      image: urlImage,
+      image: urlImage.url,
       typeProduct: data.type,
-      sizes: arraySizes,
+      sizes: sizes,
       businessId: new Types.ObjectId(businessId),
     });
-
     await newProduct.save();
     return this.responseService.success(201, 'Producto creado exitosamente.');
   }

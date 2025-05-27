@@ -10,5 +10,5 @@ export interface CommonResponseInterface<T = any> {
   /** Descriptive message of the response. */
   message: string;
   /** Optional data returned in the response. */
-  data: T;
+  data?: T;
 }

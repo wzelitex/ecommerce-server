@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Model } from 'mongoose';
+import { Model, UpdateQuery } from 'mongoose';
 import { OrderSchema } from '../../../schema/orders.schema';
 import { InjectModel } from '@nestjs/mongoose';
 import {
@@ -50,8 +50,8 @@ export class InternalCommonOrdersService {
     return this.ordersModel.findById(id);
   }
 
-  async findByIdAndUpdate<T = Record<string, any>>(id: string, data: T) {
-    return this.ordersModel.findByIdAndUpdate(id, data);
+  async findByIdAndUpdate(id: string, data: UpdateQuery<OrderSchema>) {
+    return this.ordersModel.findByIdAndUpdate(id, data, { new: true });
   }
 
   async findByIdAndDelete(id: string) {

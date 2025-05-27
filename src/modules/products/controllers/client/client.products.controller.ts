@@ -13,11 +13,6 @@ export class ClientProductsController {
     return this.clientProductsService.findProductsSearcher(text, offset);
   }
 
-  @Get()
-  findProductsRecommendSearcher() {
-    // return this.clientProductsService.fin;
-  }
-
   @Get('get/random/products')
   findRandomProducts() {
     return this.clientProductsService.findProductsRandom();

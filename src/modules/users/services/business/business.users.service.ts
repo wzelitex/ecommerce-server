@@ -3,11 +3,13 @@ import { Model, Types } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 import { UserBusinessSchema } from '../../schema/users.schema';
 import { ResponseService } from 'src/modules/utils/services/response.service';
-import { BusinessInterface } from '../../interface/users.interface';
+import {
+  BusinessInterface,
+  NetWorksUsersInterface,
+} from '../../interface/users.interface';
 import { SanitizeService } from 'src/modules/utils/services/sanitize.service';
 import { BusinessUsersServiceInterface } from '../../interface/services/business.users.interface';
 import { CommonResponseInterface } from 'src/interface/response.interface';
-import { UpdateDataSectionInterface } from '../../interface/users.update.interface';
 import { AddLocationUserDto } from '../../dto/update.users.dto';
 
 @Injectable()
@@ -20,23 +22,6 @@ export class BusinessUsersService implements BusinessUsersServiceInterface {
   ) {}
 
   private readonly limitDocuments = 10;
-
-  async postAddDataSection(
-    data: UpdateDataSectionInterface,
-    userId: string,
-  ): Promise<CommonResponseInterface> {
-    const user = await this.usersModel.findByIdAndUpdate(userId, {
-      aboutUs: data.aboutUs,
-      exteriorImage: data.exteriorImage,
-      interiorImage: data.interiorImage,
-    });
-
-    if (!user) return this.responseService.error(404, 'Negocio no encontrado.');
-    return this.responseService.success(
-      200,
-      'Negocio actualizado correctamente.',
-    );
-  }
 
   async postAddLocation(
     data: AddLocationUserDto,
@@ -100,6 +85,50 @@ export class BusinessUsersService implements BusinessUsersServiceInterface {
     );
   }
 
+  async putAddNetworks(id: string, data: NetWorksUsersInterface) {
+    this.sanitizeService.sanitizeAllString(data);
+
+    // Construir las URLs completas si se proporcionan los usernames
+    if (data.facebook)
+      data.facebook = 'https://www.facebook.com/' + data.facebook;
+    if (data.instagram)
+      data.instagram = 'https://www.instagram.com/' + data.instagram;
+    if (data.tiktok) data.tiktok = 'https://www.tiktok.com/@' + data.tiktok;
+    if (data.twitter) data.twitter = 'https://twitter.com/' + data.twitter;
+
+    const user = await this.usersModel.findByIdAndUpdate(
+      new Types.ObjectId(id),
+      {
+        facebook: data.facebook,
+        instagram: data.instagram,
+        tiktok: data.tiktok,
+        twitter: data.twitter,
+      },
+    );
+
+    if (!user) return this.responseService.error(404, 'User no found.');
+    return this.responseService.success(200, 'User update.');
+  }
+
+  async putAddComplement(
+    id: string,
+    data: { description: string },
+    file: Express.Multer.File,
+  ) {
+    this.sanitizeService.sanitizeAllString(data);
+
+    const user = await this.usersModel.findByIdAndUpdate(
+      new Types.ObjectId(id),
+      {
+        image: '',
+        description: data.description,
+      },
+    );
+
+    if (!user) return this.responseService.error(404, 'User no found.');
+    return this.responseService.success(200, 'User update.');
+  }
+
   async putInfo(id: string, data: BusinessInterface) {
     const updateData = Object.fromEntries(
       Object.entries(data).filter(([_, v]) => v !== undefined && v !== ''),
@@ -116,13 +145,6 @@ export class BusinessUsersService implements BusinessUsersServiceInterface {
   }
 
   /* funcitons to another controllers */
-  async getHeaderData(id: string) {
-    return this.usersModel.findById(new Types.ObjectId(id), {
-      name: 1,
-      image: 1,
-      _id: 0,
-    });
-  }
 
   async getBusinessSearcher(text: string, offset: string) {
     return this.usersModel.aggregate([

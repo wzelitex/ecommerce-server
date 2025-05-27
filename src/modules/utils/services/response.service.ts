@@ -1,9 +1,14 @@
 import { Injectable } from '@nestjs/common';
 import { ResponseServiceInterface } from '../interfaces/services/utils.interface';
+import { CommonResponseInterface } from 'src/interface/response.interface';
 
 @Injectable()
 export class ResponseService implements ResponseServiceInterface {
-  success<T>(status: number, message: string, data?: T) {
+  success<T>(
+    status: number,
+    message: string,
+    data?: T,
+  ): CommonResponseInterface<T> {
     return {
       success: true,
       status: status,
@@ -12,7 +17,11 @@ export class ResponseService implements ResponseServiceInterface {
     };
   }
 
-  error<T>(status: number, message: string, data?: T) {
+  error<T>(
+    status: number,
+    message: string,
+    data?: T,
+  ): CommonResponseInterface<T> {
     return {
       success: false,
       status: status,

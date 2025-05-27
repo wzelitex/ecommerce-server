@@ -1,5 +1,6 @@
 import { CommonResponseInterface } from 'src/interface/response.interface';
 import { BusinessInterface } from '../users.interface';
+import { UserBusinessSchema } from '../../schema/users.schema';
 
 /**
  * Interface defining the structure for business user operations.
@@ -50,27 +51,6 @@ export interface BusinessUsersServiceInterface {
    *  @return {Promise<CommonResponseInterface>} - Resposne indicating success or failure
    *  **/
   postAddLocation(data: any, userId: string): Promise<CommonResponseInterface>;
-
-  /**
-   *  Add info location business
-   *
-   *  @param {any} data - data location business
-   *  @param {string} userId - id to update the document business
-   *
-   *  @return {Promise<CommonResponseInterface>} - Resposne indicating success or failure
-   *  **/
-  postAddDataSection(
-    data: any,
-    userId: string,
-  ): Promise<CommonResponseInterface>;
-
-  /**
-   * Retrieves basic header data for a business user.
-   *
-   * @param {string} id - ID of the user.
-   * @returns {Promise<{ name: string; image: string }>} - Response with name and image.
-   */
-  getHeaderData(id: string): Promise<{ name: string; image: string }>;
 
   /**
    * Searches businesses by name.

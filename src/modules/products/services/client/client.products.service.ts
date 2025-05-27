@@ -71,7 +71,8 @@ export class ClientProductsService implements ClientProductsServiceInterface {
     ]);
 
     if (products.length === 0)
-      return this.responseService.error(404, 'Productos no encontrados.');
+      return this.responseService.error(404, 'Productos no encontrados.', []);
+
     return this.responseService.success(
       200,
       'Productos encontrados.',
@@ -94,7 +95,7 @@ export class ClientProductsService implements ClientProductsServiceInterface {
       .skip(parseInt(offset) * 10);
 
     if (!products || products.length === 0)
-      return this.responseService.error(404, 'Productos no encontrados.');
+      return this.responseService.error(404, 'Productos no encontrados.', []);
 
     return this.responseService.success(
       200,
@@ -114,10 +115,16 @@ export class ClientProductsService implements ClientProductsServiceInterface {
       const products = await this.productsModel
         .find({}, { name: 1, price: 1, image: 1, _id: 1, businessId: 1 })
         .populate('businessId', 'name')
-        .limit(10);
+        .limit(10)
+        .lean();
 
-      if (!products.length)
-        return this.responseService.error(404, 'Productos no recomendados.');
+      if (!products.length) {
+        return this.responseService.error(
+          404,
+          'Productos no recomendados.',
+          [],
+        );
+      }
 
       return this.responseService.success(
         200,
@@ -133,7 +140,7 @@ export class ClientProductsService implements ClientProductsServiceInterface {
       });
 
       if (!product)
-        return this.responseService.error(404, 'Producto no encontrado.');
+        return this.responseService.error(404, 'Producto no encontrado.', []);
 
       const products = await this.productsModel.aggregate([
         {
@@ -159,15 +166,20 @@ export class ClientProductsService implements ClientProductsServiceInterface {
             price: 1,
             image: 1,
             'businessId.name': 1,
-            score: { $meta: 'textScore' }, // Ordenar por relevancia
+            score: { $meta: 'textScore' },
           },
         },
-        { $sort: { score: -1 } }, // Mayor relevancia primero
+        { $sort: { score: -1 } },
         { $limit: 15 },
       ]);
 
-      if (!products.length)
-        return this.responseService.error(404, 'Productos no recomendados.');
+      if (!products.length) {
+        return this.responseService.error(
+          404,
+          'Productos no recomendados.',
+          [],
+        );
+      }
 
       return this.responseService.success(
         200,
@@ -175,6 +187,22 @@ export class ClientProductsService implements ClientProductsServiceInterface {
         products,
       );
     }
+
+    const ids = shoppings.map((s) => s.productId);
+
+    const products = await this.productsModel
+      .find(
+        { _id: { $in: ids } },
+        { name: 1, price: 1, image: 1, _id: 1, businessId: 1 },
+      )
+      .populate('businessId', 'name')
+      .lean();
+
+    return this.responseService.success(
+      200,
+      'Productos recomendados por compras previas.',
+      products,
+    );
   }
 
   async findProductsSearcher(text: string, offset: string) {
@@ -211,7 +239,7 @@ export class ClientProductsService implements ClientProductsServiceInterface {
     ]);
 
     if (!products || products.length === 0)
-      return this.responseService.error(404, 'Productos no encontrados.');
+      return this.responseService.error(404, 'Productos no encontrados.', []);
 
     return this.responseService.success(
       200,
@@ -231,7 +259,7 @@ export class ClientProductsService implements ClientProductsServiceInterface {
       .skip(parseInt(offset, 10) * 10);
 
     if (!products || products.length === 0)
-      return this.responseService.error(404, 'Productos no encotrados.');
+      return this.responseService.error(404, 'Productos no encotrados.', []);
 
     return this.responseService.success(
       200,
@@ -248,7 +276,7 @@ export class ClientProductsService implements ClientProductsServiceInterface {
         'name description facebook tiktok instagram twitter',
       );
     if (!product)
-      return this.responseService.error(404, 'Producto no encontrado.');
+      return this.responseService.error(404, 'Producto no encontrado.', []);
     return this.responseService.success(200, 'Producto encontrados.', product);
   }
 

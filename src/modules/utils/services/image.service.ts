@@ -1,45 +1,39 @@
-import { Injectable, BadRequestException } from '@nestjs/common';
-import { Storage } from '@google-cloud/storage';
-import { ImageServiceInterface } from '../interfaces/services/utils.interface';
+import { Injectable } from '@nestjs/common';
+import { v2 as cloudinary, UploadApiResponse } from 'cloudinary';
+import { ConfigService } from '@nestjs/config';
+import { Readable } from 'stream';
+import * as dotenv from 'dotenv';
+
+dotenv.config();
 
 @Injectable()
-export class ImageService implements ImageServiceInterface {
-  private readonly storage: Storage;
-  private readonly bucketName: string;
-
-  constructor() {
-    this.storage = new Storage({
-      keyFilename: 'C:/Company/Credenciales_google_cloud/',
+export class CloudinaryService {
+  constructor(private readonly configService: ConfigService) {
+    cloudinary.config({
+      cloud_name: this.configService.get<string>('CLOUDINARY_CLOUD_NAME') ?? '',
+      api_key: this.configService.get<string>('CLOUDINARY_API_KEY') ?? '',
+      api_secret: this.configService.get<string>('CLOUDINARY_API_SECRET') ?? '',
     });
-    this.bucketName = 'ecommerce-storages';
   }
 
-  async uploadFile(body: Express.Multer.File): Promise<string> {
-    const { buffer, originalname, mimetype } = body;
-
-    const fileName = `${Date.now()}-${originalname}`;
-    const bucket = this.storage.bucket(this.bucketName);
-
-    try {
-      const blob = bucket.file(fileName);
-      const blobStream = blob.createWriteStream({
-        resumable: true,
-        metadata: {
-          contentType: mimetype,
+  async uploadFile(
+    file: Express.Multer.File,
+    folderName: 'business' | 'products',
+  ): Promise<UploadApiResponse> {
+    return new Promise((resolve, reject) => {
+      const uploadStream = cloudinary.uploader.upload_stream(
+        { folder: folderName },
+        (error: Error | undefined, result: UploadApiResponse | undefined) => {
+          if (error) return reject(error);
+          if (!result) return reject(new Error('No result from Cloudinary'));
+          resolve(result);
         },
-      });
+      );
 
-      blobStream.end(buffer);
-
-      await new Promise((resolve, reject) => {
-        blobStream.on('finish', resolve);
-        blobStream.on('error', reject);
-      });
-
-      await blob.makePrivate();
-      return `https://storage.googleapis.com/${this.bucketName}/${fileName}`;
-    } catch {
-      throw new BadRequestException(`Error al subir el archivo:`);
-    }
+      const readable = new Readable();
+      readable.push(file.buffer);
+      readable.push(null);
+      readable.pipe(uploadStream);
+    });
   }
 }

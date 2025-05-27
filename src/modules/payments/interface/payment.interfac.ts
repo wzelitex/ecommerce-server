@@ -31,3 +31,10 @@ export interface InterfaceOptionsPayment {
 export interface InterfaceBusinessPay {
   businessId: BusinessInterface;
 }
+
+export interface InterfacePaymentCredentials {
+  accessToken: string;
+  refreshToken: string;
+  mpUserId: string;
+  businessId: string;
+}

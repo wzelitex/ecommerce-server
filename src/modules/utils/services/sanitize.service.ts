@@ -1,11 +1,11 @@
 import { Injectable } from '@nestjs/common';
-import sanitize from 'sanitize-html';
+import * as sanitize from 'sanitize-html';
 import { SanitizeServiceInterface } from '../interfaces/services/utils.interface';
 
 @Injectable()
 export class SanitizeService implements SanitizeServiceInterface {
   sanitizeString(value: string): string {
-    return sanitize(value);
+    return sanitize(value) as string;
   }
 
   sanitizeArray(value: string[]): string[] {
@@ -36,13 +36,17 @@ export class SanitizeService implements SanitizeServiceInterface {
     return objectSanitized as T;
   }
 
-  sanitizeAllString<T>(data: T) {
-    Object.keys(data).forEach((key) => {
-      if (typeof data[key] === 'string') {
-        data[key] = this.sanitizeString(data[key]);
-      }
-    });
+  sanitizeAllString<T extends Record<string, any>>(data: T): T {
+    const sanitizedData: Record<string, any> = {};
 
-    return data;
+    for (const key in data) {
+      if (typeof data[key] === 'string') {
+        sanitizedData[key] = this.sanitizeString(data[key]);
+      } else {
+        sanitizedData[key] = data[key]; // mantiene el valor si no es string
+      }
+    }
+
+    return sanitizedData as T;
   }
 }

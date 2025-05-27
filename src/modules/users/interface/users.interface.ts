@@ -19,7 +19,7 @@ interface LocationUserInterface {
 }
 
 /* interface newtworks user */
-interface NetWorksUsersInterface {
+export interface NetWorksUsersInterface {
   facebook: string;
   instagram: string;
   twitter: string;

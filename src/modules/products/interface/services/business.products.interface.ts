@@ -37,9 +37,9 @@ export interface BusinessProductsServiceInterface {
    */
   putProduct(
     id: string,
-    data: CreateProductShoeInterface,
-    image: Express.Multer.File,
     userId: string,
+    data: CreateProductShoeInterface,
+    // image: Express.Multer.File,
   ): Promise<CommonResponseInterface>;
 
   /**
@@ -50,9 +50,9 @@ export interface BusinessProductsServiceInterface {
    * @returns A response indicating the success or failure of the operation.
    */
   createProduct(
+    businessId: string,
     data: CreateProductShoeInterface,
     file: Express.Multer.File,
-    businessId: string,
   ): Promise<CommonResponseInterface>;
 
   /**

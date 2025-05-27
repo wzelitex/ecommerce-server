@@ -6,7 +6,6 @@ import { JwtService } from '@nestjs/jwt';
 import {
   NewUserCollectionInterface,
   PayloadUserInterface,
-  ResponseLoginInterface,
 } from './interface/interface.login';
 import { LoginDto, SignupBusinessDto, SignupClientDto } from './dto/auth.dto';
 import { ResponseService } from '../utils/services/response.service';
@@ -30,13 +29,14 @@ export class AuthService {
     try {
       const payload = await this.jwtService.verifyAsync<PayloadUserInterface>(
         refreshToken,
-        {
-          secret: '',
-        },
+        { secret: process.env.AUTH_SECRET },
       );
 
       if (!payload)
-        return this.responseService.error(409, 'Refresh token invalido.');
+        return this.responseService.error(409, 'Refresh token invalid.');
+
+      const userFound = await this.usersService.getUserIdById(payload.userId);
+      if (!userFound) return this.responseService.error(404, 'User no found.');
 
       const newAccessToken = await this.generateNewTokenAccess(
         payload.userId,
@@ -46,7 +46,7 @@ export class AuthService {
 
       return this.responseService.success(
         201,
-        'Nuevo token de acceso.',
+        'new access token.',
         newAccessToken,
       );
     } catch {
@@ -54,14 +54,9 @@ export class AuthService {
     }
   }
 
-  async signupDelivery(data: SignupClientDto): Promise<{
-    success: boolean;
-    message: string;
-    status: number;
-    data: { access_token: string; refresh_token: string };
-  }> {
+  async signupDelivery(data: SignupClientDto) {
     const user = await this.findUser(data.email);
-    if (user) return this.responseService.error(409, 'Usuario ya autenticado.');
+    if (user) return this.responseService.error(409, 'user exist');
 
     const passwordHashed = await this.encryptService.hasher(data.password);
 
@@ -90,20 +85,16 @@ export class AuthService {
 
     const refreshToken = await this.generateNewTokenRefresh(newDelivery._id);
 
-    return this.responseService.success<{
-      access_token: string;
-      refresh_token: string;
-    }>(201, 'Usario creado exitosamente.', {
+    return this.responseService.success(201, 'User created successfully', {
       access_token: accessToken,
       refresh_token: refreshToken,
     });
   }
 
-  async signIn(data: LoginDto): Promise<ResponseLoginInterface> {
+  async signIn(data: LoginDto) {
     const user = await this.authModel.findOne({ email: data.email });
 
-    if (!user || user === undefined || user === null)
-      return this.responseService.error(404, 'Usuario no encontrado.');
+    if (!user) return this.responseService.error(404, 'User no found.');
 
     const isMatchPassword = await this.encryptService.compare(
       data.password,
@@ -111,7 +102,7 @@ export class AuthService {
     );
 
     if (!isMatchPassword)
-      return this.responseService.error(409, 'Contraseña no coinciden.');
+      return this.responseService.error(409, 'password don´t match');
 
     const access_token = await this.generateNewTokenAccess(
       user.userId.toString(),
@@ -123,22 +114,17 @@ export class AuthService {
       user.userId.toString(),
     );
 
-    return this.responseService.success(201, 'Usuario creado exitosamente.', {
+    return this.responseService.success(201, 'User created successfully.', {
       access_token: access_token,
       refresh_token: refresh_token,
     });
   }
 
-  async signUpClient(signupData: SignupClientDto): Promise<{
-    success: boolean;
-    message: string;
-    status: number;
-    data: { access_token: string; refresh_token: string };
-  }> {
+  async signUpClient(signupData: SignupClientDto) {
     const { email, password, phone, lada } = signupData;
     const user = await this.findUser(email);
 
-    if (user) return this.responseService.error(409, 'Usuario ya autenticado.');
+    if (user) return this.responseService.error(409, 'User exist');
 
     const hashedPassword = await this.encryptService.hasher(password);
     const newUser = await this.usersService.createClient({
@@ -163,22 +149,17 @@ export class AuthService {
 
     const token_refresh = await this.generateNewTokenRefresh(newUser._id);
 
-    return this.responseService.success(201, 'Usuario creado exitosamente.', {
+    return this.responseService.success(201, 'User created successfully.', {
       access_token: token_access,
       refresh_token: token_refresh,
     });
   }
 
-  async signUpBusiness(signupData: SignupBusinessDto): Promise<{
-    success: boolean;
-    message: string;
-    status: number;
-    data: { access_token: string; refresh_token: string };
-  }> {
+  async signUpBusiness(signupData: SignupBusinessDto) {
     const { email, phone, password, lada } = signupData;
 
     const user = await this.findUser(email);
-    if (user) return this.responseService.error(201, 'Usuario ya existe');
+    if (user) return this.responseService.error(201, 'User exist.');
 
     const hashedPassword = await this.encryptService.hasher(password);
     const newBusiness = await this.usersService.createBusiness({
@@ -203,7 +184,7 @@ export class AuthService {
 
     const refresh_token = await this.generateNewTokenRefresh(newBusiness._id);
 
-    return this.responseService.success(201, 'Usuario creado exitosamente.', {
+    return this.responseService.success(201, 'User created successfully', {
       access_token: access_token,
       refresh_token: refresh_token,
     });
@@ -219,7 +200,7 @@ export class AuthService {
     return await this.jwtService.signAsync(
       { userId, rol, email: email },
       {
-        secret: 'keysecret',
+        secret: process.env.AUTH_SECRET,
         expiresIn: '1d',
       },
     );
@@ -229,7 +210,7 @@ export class AuthService {
     return await this.jwtService.signAsync(
       { userId: userId },
       {
-        secret: 'keysecret',
+        secret: process.env.AUTH_SECRET,
         expiresIn: '90d',
       },
     );

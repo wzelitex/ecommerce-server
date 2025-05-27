@@ -79,11 +79,14 @@ export class DeliveryOrdersService implements DeliveryOrderServiceInterface {
   }
 
   async getDetailsOrderPublished(id: string, deliveryId: string) {
+
     const order = await this.ordersModel
       .findById(id, { productId: 1, userId: 1, businessId: 1, quantity: 1 })
       .populate('productId', 'image name')
       .populate('userId', 'street cologne municipality state country')
       .populate('businessId', 'street cologne country state municipality ');
+
+
 
     if (!order) return this.responseService.error(404, 'Pedido no encontrado');
 
@@ -100,11 +103,17 @@ export class DeliveryOrdersService implements DeliveryOrderServiceInterface {
   }
 
   async postOffersDelivery(deliveryId: string, orderId: string, price: number) {
-    const order = await this.ordersModel.findById(orderId, {
+    console.log(orderId)
+
+    const order = await this.ordersModel.findById(new Types.ObjectId(orderId), {
       businessId: 1,
       _id: 1,
       userId: 1,
     });
+
+    console.log(order)
+
+    if (!order) return this.responseService.error(404, 'Pedido no encontrado.');
 
     const newOrderOffer = new this.ordersOffersModel({
       businessId: new Types.ObjectId(order.businessId),

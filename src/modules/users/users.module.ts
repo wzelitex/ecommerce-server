@@ -60,6 +60,6 @@ import { InternalUsersService } from './utils/internal/internal.users.service';
     DeliveryUserService,
     InternalUsersService,
   ],
-  exports: [ExternalUsersService],
+  exports: [ExternalUsersService, MongooseModule],
 })
 export class UsersModule {}

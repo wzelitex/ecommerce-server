@@ -1,5 +1,6 @@
 import { IsString, IsNumber, IsNotEmpty } from 'class-validator';
 import { Transform } from 'class-transformer';
+import { PartialType } from '@nestjs/mapped-types';
 
 export class CreateProductShoeDto {
   @IsNotEmpty()
@@ -35,3 +36,5 @@ export class CreateProductShoeDto {
   @IsString()
   type: string;
 }
+
+export class UpdateProductShoeDto extends PartialType(CreateProductShoeDto) {}

@@ -100,10 +100,10 @@ export interface SanitizeServiceInterface {
   /**
    * Sanitizes all string values within an object.
    *
-   * @param {T} data - The object to sanitize.
-   * @returns {T} The object with sanitized string values.
+   * @param {Record<string,string>} data - The object to sanitize.
+   * @returns {Record<string, string>} The object with sanitized string values.
    */
-  sanitizeAllString<T>(data: T): T;
+  sanitizeAllString(data: Record<string, string>);
 }
 
 /**

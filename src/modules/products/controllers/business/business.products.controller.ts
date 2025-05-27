@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Param,
   Patch,
@@ -11,21 +12,24 @@ import {
   UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
-import { CreateProductShoeDto } from '../../dto/products.dto';
+import {
+  CreateProductShoeDto,
+  UpdateProductShoeDto,
+} from '../../dto/products.dto';
 import { Request } from 'express';
 import { AuthGuard } from '@nestjs/passport';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { BusinessProductsService } from '../../services/business/business.products.service';
 
-@UseGuards(AuthGuard('jwt'))
 @Controller('api/business/products')
+@UseGuards(AuthGuard('jwt'))
 export class BusinessProductsController {
   constructor(
     private readonly businessProductsService: BusinessProductsService,
   ) {}
 
-  @Get('get/:id/product')
-  getProductById(@Param('id') id: string) {
+  @Get('get/product')
+  getProductById(@Query('id') id: string) {
     return this.businessProductsService.findById(id);
   }
 
@@ -45,48 +49,35 @@ export class BusinessProductsController {
   }
 
   @Post('post/product')
-  @UseInterceptors(FileInterceptor('image'))
+  @UseInterceptors(FileInterceptor('file'))
   createProduct(
-    @Body() data: CreateProductShoeDto,
     @UploadedFile() file: Express.Multer.File,
-    @Req() req: Request,
-  ) {
-    const userId = req.user.userId;
-    return this.businessProductsService.createProduct(
-      {
-        ...data,
-        _id: '',
-      },
-      file,
-      userId,
-    );
-  }
-
-  @Patch('put/:id/product')
-  putProductById(
-    @Param('id') id: string,
     @Body() data: CreateProductShoeDto,
-    file: Express.Multer.File,
     @Req() req: Request,
   ) {
-    return this.businessProductsService.putProduct(
-      id,
-      {
-        ...data,
-        _id: id,
-      },
-      file,
+    return this.businessProductsService.createProduct(
       req.user.userId,
+      { ...data },
+      file,
     );
   }
 
-  @Patch('delete/:id/product')
-  deleteProduct(@Param('id') id: string) {
+  @Patch('put/product')
+  putProductById(
+    @Query('id') id: string,
+    @Body() data: UpdateProductShoeDto,
+    @Req() req: Request,
+  ) {
+    return this.businessProductsService.putProduct(id, req.user.userId, data);
+  }
+
+  @Delete('delete/product')
+  deleteProduct(@Query('id') id: string) {
     return this.businessProductsService.deleteProduct(id);
   }
 
-  @Post('post/restore/:id/product')
-  restoreProduct(@Param('id') id: string) {
+  @Post('post/restore/product')
+  restoreProduct(@Query('id') id: string) {
     return this.businessProductsService.postRestoreProduct(id);
   }
 }

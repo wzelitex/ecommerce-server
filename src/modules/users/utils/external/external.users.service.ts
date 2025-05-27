@@ -26,6 +26,25 @@ export class ExternalUsersService {
     private readonly sanitizeService: SanitizeService,
   ) {}
 
+  async getBusinessSearched(text: string, offset: string) {
+    return await this.businessModel.aggregate([
+      {
+        $match: {
+          $or: [
+            { name: { $regex: text, $options: 'i' } },
+            { description: { $regex: text, $options: 'i' } },
+          ],
+        },
+      },
+      {
+        $project: { name: 1, _id: 1, image: 1, description: 1 },
+      },
+      {
+        $limit: 10,
+      },
+    ]);
+  }
+
   async createBusiness(
     data: CreateUserInterface,
   ): Promise<CreateUserInterfaceDocument> {
@@ -73,6 +92,7 @@ export class ExternalUsersService {
       country: 1,
     });
   }
+
   async getUserIdById(id: string) {
     return await this.usersModel.findOne(
       { userId: new Types.ObjectId(id) },

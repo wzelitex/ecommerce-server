@@ -8,6 +8,9 @@ import { JwtModule } from '@nestjs/jwt';
 import { UsersModule } from '../users/users.module';
 import { PassportModule } from '@nestjs/passport';
 import { JwtStrategy } from 'src/middleware/auth.middleware';
+import * as dotenv from 'dotenv';
+
+dotenv.config();
 
 @Module({
   imports: [
@@ -20,7 +23,7 @@ import { JwtStrategy } from 'src/middleware/auth.middleware';
     PassportModule.register({ defaultStrategy: 'jwt' }),
     JwtModule.register({
       global: true,
-      secret: 'keysecret',
+      secret: process.env.AUTH_SECRET,
       signOptions: {
         expiresIn: '1d',
       },

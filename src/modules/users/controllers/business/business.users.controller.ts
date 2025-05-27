@@ -11,13 +11,10 @@ import {
 } from '@nestjs/common';
 import { Request } from 'express';
 import { AuthGuard } from '@nestjs/passport';
-import {
-  AddLocationUserDto,
-  UpdateDataSecitonDto,
-  UpdateUsersDto,
-} from '../../dto/update.users.dto';
-import { FileInterceptor } from '@nestjs/platform-express';
+import { AddLocationUserDto, UpdateUsersDto } from '../../dto/update.users.dto';
 import { BusinessUsersService } from '../../services/business/business.users.service';
+import { NetWorksUsersInterface } from '../../interface/users.interface';
+import { FileInterceptor } from '@nestjs/platform-express';
 
 @UseGuards(AuthGuard('jwt'))
 @Controller('api/business/users')
@@ -39,22 +36,22 @@ export class BusinessUsersController {
     return this.businessUsersService.postAddLocation(data, req.user.userId);
   }
 
-  @UseInterceptors(FileInterceptor('exterior'))
-  @UseInterceptors(FileInterceptor('interior'))
-  @Patch('put/add/data/section')
-  postAddDataSection(
-    @UploadedFile() exterior: Express.Multer.File,
-    @UploadedFile() interior: Express.Multer.File,
-    @Body() data: UpdateDataSecitonDto,
+  @Patch('put/add/networks')
+  postAddNetworks(@Body() data: NetWorksUsersInterface, @Req() req: Request) {
+    return this.businessUsersService.putAddNetworks(req.user.userId, data);
+  }
+
+  @Patch('put/add/complement')
+  @UseInterceptors(FileInterceptor('image'))
+  postAddComplement(
+    @UploadedFile() file: Express.Multer.File,
+    @Body() data: { description: string; image: string },
     @Req() req: Request,
   ) {
-    return this.businessUsersService.postAddDataSection(
-      {
-        aboutUs: data.aboutUs,
-        exteriorImage: exterior,
-        interiorImage: interior,
-      },
+    return this.businessUsersService.putAddComplement(
       req.user.userId,
+      data,
+      file,
     );
   }
 
