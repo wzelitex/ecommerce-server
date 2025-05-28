@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Controller, Get, Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigModule } from '@nestjs/config';
 import * as dotenv from 'dotenv';
@@ -24,9 +24,17 @@ import { PlataformModule } from './modules/plataform/plataform.module';
 
 */
 
+@Controller('api')
+export class AppController {
+  @Get('')
+  getHome() {
+    return 'Bienvenido al server';
+  }
+}
+
 @Module({
   imports: [
-    MongooseModule.forRoot('mongodb://localhost:27017/ecommerces'),
+    MongooseModule.forRoot(process.env.MONGODB_URL!),
     ConfigModule.forRoot({
       isGlobal: true,
     }),
@@ -40,5 +48,6 @@ import { PlataformModule } from './modules/plataform/plataform.module';
     CommunicationsModule,
     PlataformModule,
   ],
+  controllers: [AppController],
 })
 export class AppModule {}
