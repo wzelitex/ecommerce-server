@@ -8,7 +8,7 @@ async function bootstrap() {
   app.enableCors({
     origin: [
       'https://www.ecommerce-business.com.mx',
-      'https://www.ecommerce-go.com.mx/',
+      'https://www.ecommerce-go.com.mx',
       'http://localhost:3001',
     ],
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
