@@ -12,6 +12,7 @@ import {
   CreateUserInterface,
   CreateUserInterfaceDocument,
 } from '../../interface/users.interface';
+import { parse } from 'path';
 
 @Injectable()
 export class ExternalUsersService {

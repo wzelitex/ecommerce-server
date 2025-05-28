@@ -62,7 +62,7 @@ export class UserClientSchema extends Document {
 
   @Prop({ default: '' })
   state: string;
-
+  e;
   @Prop({ default: '' })
   country: string;
 }

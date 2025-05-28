@@ -26,7 +26,7 @@ import { PlataformModule } from './modules/plataform/plataform.module';
 
 @Module({
   imports: [
-    MongooseModule.forRoot(process.env.MONGODB_URL!),
+    MongooseModule.forRoot('mongodb://localhost:27017/ecommerces'),
     ConfigModule.forRoot({
       isGlobal: true,
     }),

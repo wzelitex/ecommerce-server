@@ -8,6 +8,7 @@ import {
 import { UtilsModule } from '../utils/utils.module';
 import { ShoppingsModule } from '../shoppings/shoppings.module';
 import { AuthModule } from '../auth/auth.module';
+import { CommunicationsModule } from '../communication/communication.module';
 
 /* import controllers */
 import { BusinessUsersController } from './controllers/business/business.users.controller';
@@ -45,6 +46,7 @@ import { InternalUsersService } from './utils/internal/internal.users.service';
     /* utils */
     UtilsModule,
     ShoppingsModule,
+    forwardRef(() => CommunicationsModule),
     forwardRef(() => AuthModule),
   ],
   controllers: [

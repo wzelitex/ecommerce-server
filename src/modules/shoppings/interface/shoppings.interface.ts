@@ -1,5 +1,5 @@
 export interface CreateShoppingInterface {
-  productId: string;
+  id: string;
   quantity: number;
   size: string;
 }

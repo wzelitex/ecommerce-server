@@ -3,7 +3,7 @@ import { IsString, IsNotEmpty, IsNumber, IsArray } from 'class-validator';
 export class CreateShoppingDto {
   @IsString()
   @IsNotEmpty()
-  productId: string;
+  id: string;
 
   @IsNumber()
   @IsNotEmpty()

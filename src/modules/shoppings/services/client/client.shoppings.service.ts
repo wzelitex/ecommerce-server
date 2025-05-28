@@ -44,9 +44,7 @@ export class ClientShoppingsService implements ClientShoppingsServiceInterface {
 
   async addShoppingCart(userId: string, data: CreateShoppingInterface) {
     const product =
-      await this.productService.getInfoProductForCreateShoppingCart(
-        data.productId,
-      );
+      await this.productService.getInfoProductForCreateShoppingCart(data.id);
 
     if (!product)
       return this.responseService.error(404, 'Producto no encontrado.');
@@ -55,7 +53,7 @@ export class ClientShoppingsService implements ClientShoppingsServiceInterface {
       ...data,
       businessId: new Types.ObjectId(product.businessId),
       userId: new Types.ObjectId(userId),
-      productId: new Types.ObjectId(data.productId),
+      productId: new Types.ObjectId(data.id),
       total: product.price * data.quantity,
       additionalData: { size: parseInt(data.size) },
     });
@@ -65,6 +63,16 @@ export class ClientShoppingsService implements ClientShoppingsServiceInterface {
       200,
       'Compra agregada al carrito de compras.',
     );
+  }
+
+  async getShopping(id: string) {
+    const shopping = await this.shoppingModel
+      .findById(id)
+      .populate('productId', 'name image price description')
+      .populate('businessId', 'name')
+      .lean();
+    if (!shopping) return this.responseService.error(404, 'Shopping no found.');
+    return this.responseService.success(200, 'Shopping found.', shopping);
   }
 
   async deleteShoppingFromCart(id: string) {

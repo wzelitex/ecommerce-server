@@ -3,6 +3,7 @@ import {
   Controller,
   Get,
   Patch,
+  Post,
   Query,
   Req,
   UseGuards,
@@ -19,6 +20,7 @@ export class ClientUsersController {
 
   @Get('get/email')
   getEmail(@Req() req: Request) {
+    console.log(req.user.userId);
     return this.clientUsersService.getEmail(req.user.userId);
   }
 
@@ -43,6 +45,30 @@ export class ClientUsersController {
   @Patch('put/info')
   putInfo(@Req() req: Request, @Body() data: UpdateUsersDto) {
     return this.clientUsersService.putInfo(req.user.userId, data);
+  }
+
+  @Patch('put/password')
+  putPassword(
+    @Req() req: Request,
+    @Body() data: { password: string; confirmPassword: string },
+  ) {
+    return this.clientUsersService.putPassword(req.user.userId, data.password);
+  }
+
+  @Get('get/code')
+  getCode(@Req() req: Request) {
+    return this.clientUsersService.getCode(req.user.userId);
+  }
+
+  @Post('post/validate/password')
+  postValidatePassword(
+    @Req() req: Request,
+    @Body() data: { password: string; confirmPassword: string },
+  ) {
+    return this.clientUsersService.postValidatePassword(
+      req.user.userId,
+      data.password,
+    );
   }
 }
 

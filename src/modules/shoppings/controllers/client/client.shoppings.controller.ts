@@ -33,6 +33,11 @@ export class ClientShoppingsController {
     );
   }
 
+  @Get('get/shopping')
+  getShopping(@Query('id') id: string) {
+    return this.clientShoppingsService.getShopping(id);
+  }
+
   @Post('post/shopping')
   addShoppingCart(@Req() req: Request, @Body() data: CreateShoppingDto) {
     return this.clientShoppingsService.addShoppingCart(req.user.userId, data);

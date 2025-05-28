@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { forwardRef, Module } from '@nestjs/common';
 import { ContactsSchemaFactory } from './schema/contact.schema';
 import { MongooseModule } from '@nestjs/mongoose';
 import { UtilsModule } from '../utils/utils.module';
@@ -23,7 +23,7 @@ import { InternalCommunicationsService } from './utils/internal/internal.communi
       },
     ]),
     UtilsModule,
-    UsersModule,
+    forwardRef(() => UsersModule),
   ],
   controllers: [CommunicationsController],
   providers: [

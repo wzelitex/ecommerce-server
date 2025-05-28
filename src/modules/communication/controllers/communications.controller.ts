@@ -1,4 +1,12 @@
-import { Body, Controller, Post, Req, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Post,
+  Query,
+  Req,
+  UseGuards,
+} from '@nestjs/common';
 import { Request } from 'express';
 import { AuthGuard } from '@nestjs/passport';
 import { CommunicationsService } from '../services/communications.service';
@@ -12,5 +20,10 @@ export class CommunicationsController {
   @Post('post/contact')
   postContact(@Req() req: Request, @Body() body: CreateNewContactDto) {
     return this.contactsService.postContact(body, req.user.userId);
+  }
+
+  @Get('get/notifications')
+  getNotifications(@Req() req: Request, @Query('offset') offset: string) {
+    return this.contactsService.getNotifications(req.user.userId, offset);
   }
 }

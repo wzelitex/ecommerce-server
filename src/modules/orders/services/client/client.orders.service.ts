@@ -60,8 +60,6 @@ export class ClientOrdersService implements ClientOrdersServiceInterface {
     //   user,
     // );
 
-    // console.log('preference: ', preferenceId);
-
     await this.shoppingsService.deleteShoppingsFromCart(userId);
 
     return this.responseService.success(

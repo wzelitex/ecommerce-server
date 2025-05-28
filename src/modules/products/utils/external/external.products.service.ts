@@ -1,6 +1,6 @@
 import { Global, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import { Model, Types } from 'mongoose';
 import { ProductShoeSchema } from '../../schema/product.schema';
 
 @Global()
@@ -26,7 +26,10 @@ export class ExternalProductsService {
   }
 
   async getInfoProductForCreateShoppingCart(id: string) {
-    return await this.productModel.findById(id, { price: 1, businessId: 1 });
+    return await this.productModel.findById(new Types.ObjectId(id), {
+      price: 1,
+      businessId: 1,
+    });
   }
 
   async substractQuantityProduct(
@@ -83,10 +86,8 @@ export class ExternalProductsService {
           price: 1,
           image: 1,
           'businessId.name': 1,
-          score: { $meta: 'textScore' },
         },
       },
-      { $sort: { score: -1 } },
       { $limit: 15 },
     ]);
   }
