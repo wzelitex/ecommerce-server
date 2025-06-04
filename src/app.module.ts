@@ -34,7 +34,7 @@ export class AppController {
 
 @Module({
   imports: [
-    MongooseModule.forRoot('mongodb://localhost:27017/ecommerces'),
+    MongooseModule.forRoot(process.env.MONGODB_URL!),
     ConfigModule.forRoot({
       isGlobal: true,
     }),
