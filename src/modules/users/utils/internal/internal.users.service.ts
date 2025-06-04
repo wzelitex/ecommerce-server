@@ -23,6 +23,10 @@ export class InternalUsersService {
       country: 1,
       number: 1,
       zipCode: 1,
+      facebook: 1,
+      tiktok: 1,
+      twitter: 1,
+      instagram: 1,
     });
   }
 }

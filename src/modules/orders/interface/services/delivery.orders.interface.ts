@@ -50,6 +50,6 @@ export type DeliveryOrderServiceInterface = {
   postOffersDelivery(
     deliveryId: string,
     orderId: string,
-    price: number,
+    price: string,
   ): Promise<CommonResponseInterface>;
 };

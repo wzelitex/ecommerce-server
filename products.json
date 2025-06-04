@@ -1,0 +1,222 @@
+[
+  {
+    "image": "https://example.com/image1.jpg",
+    "name": "Producto 1",
+    "price": 100,
+    "quantity": 10,
+    "available": true,
+    "description": "Descripción del producto 1",
+    "type": "tipoA",
+    "businessId": { "$oid": "6834a2f39ca0cf45f39f041d" },
+    "isDeleted": false
+  },
+  {
+    "image": "https://example.com/image2.jpg",
+    "name": "Producto 2",
+    "price": 200,
+    "quantity": 5,
+    "available": true,
+    "description": "Descripción del producto 2",
+    "type": "tipoA",
+    "businessId": { "$oid": "6834a2f39ca0cf45f39f041d" },
+    "isDeleted": false
+  },
+  {
+    "image": "https://example.com/image3.jpg",
+    "name": "Producto 3",
+    "price": 150,
+    "quantity": 8,
+    "available": true,
+    "description": "Descripción del producto 3",
+    "type": "tipoA",
+    "businessId": { "$oid": "6834a2f39ca0cf45f39f041d" },
+    "isDeleted": false
+  },
+  {
+    "image": "https://example.com/image4.jpg",
+    "name": "Producto 4",
+    "price": 180,
+    "quantity": 12,
+    "available": true,
+    "description": "Descripción del producto 4",
+    "type": "tipoA",
+    "businessId": { "$oid": "6834a2f39ca0cf45f39f041d" },
+    "isDeleted": false
+  },
+  {
+    "image": "https://example.com/image5.jpg",
+    "name": "Producto 5",
+    "price": 210,
+    "quantity": 7,
+    "available": true,
+    "description": "Descripción del producto 5",
+    "type": "tipoB",
+    "businessId": { "$oid": "6834a2f39ca0cf45f39f041d" },
+    "isDeleted": false
+  },
+  {
+    "image": "https://example.com/image6.jpg",
+    "name": "Producto 6",
+    "price": 95,
+    "quantity": 15,
+    "available": true,
+    "description": "Descripción del producto 6",
+    "type": "tipoB",
+    "businessId": { "$oid": "6834a2f39ca0cf45f39f041d" },
+    "isDeleted": false
+  },
+  {
+    "image": "https://example.com/image7.jpg",
+    "name": "Producto 7",
+    "price": 300,
+    "quantity": 3,
+    "available": true,
+    "description": "Descripción del producto 7",
+    "type": "tipoC",
+    "businessId": { "$oid": "6834a2f39ca0cf45f39f041d" },
+    "isDeleted": false
+  },
+  {
+    "image": "https://example.com/image8.jpg",
+    "name": "Producto 8",
+    "price": 80,
+    "quantity": 20,
+    "available": true,
+    "description": "Descripción del producto 8",
+    "type": "tipoC",
+    "businessId": { "$oid": "6834a2f39ca0cf45f39f041d" },
+    "isDeleted": false
+  },
+  {
+    "image": "https://example.com/image9.jpg",
+    "name": "Producto 9",
+    "price": 175,
+    "quantity": 6,
+    "available": true,
+    "description": "Descripción del producto 9",
+    "type": "tipoC",
+    "businessId": { "$oid": "6834a2f39ca0cf45f39f041d" },
+    "isDeleted": false
+  },
+  {
+    "image": "https://example.com/image10.jpg",
+    "name": "Producto 10",
+    "price": 110,
+    "quantity": 9,
+    "available": true,
+    "description": "Descripción del producto 10",
+    "type": "tipoC",
+    "businessId": { "$oid": "6834a2f39ca0cf45f39f041d" },
+    "isDeleted": false
+  },
+  {
+    "image": "https://example.com/image11.jpg",
+    "name": "Producto 11",
+    "price": 130,
+    "quantity": 14,
+    "available": true,
+    "description": "Descripción del producto 11",
+    "type": "tipoA",
+    "businessId": { "$oid": "6834a2f39ca0cf45f39f041d" },
+    "isDeleted": false
+  },
+  {
+    "image": "https://example.com/image12.jpg",
+    "name": "Producto 12",
+    "price": 220,
+    "quantity": 2,
+    "available": true,
+    "description": "Descripción del producto 12",
+    "type": "tipoA",
+    "businessId": { "$oid": "6834a2f39ca0cf45f39f041d" },
+    "isDeleted": false
+  },
+  {
+    "image": "https://example.com/image13.jpg",
+    "name": "Producto 13",
+    "price": 160,
+    "quantity": 11,
+    "available": true,
+    "description": "Descripción del producto 13",
+    "type": "tipoA",
+    "businessId": { "$oid": "6834a2f39ca0cf45f39f041d" },
+    "isDeleted": false
+  },
+  {
+    "image": "https://example.com/image14.jpg",
+    "name": "Producto 14",
+    "price": 140,
+    "quantity": 13,
+    "available": true,
+    "description": "Descripción del producto 14",
+    "type": "tipoA",
+    "businessId": { "$oid": "6834a2f39ca0cf45f39f041d" },
+    "isDeleted": false
+  },
+  {
+    "image": "https://example.com/image15.jpg",
+    "name": "Producto 15",
+    "price": 90,
+    "quantity": 16,
+    "available": true,
+    "description": "Descripción del producto 15",
+    "type": "tipoB",
+    "businessId": { "$oid": "6834a2f39ca0cf45f39f041d" },
+    "isDeleted": false
+  },
+  {
+    "image": "https://example.com/image16.jpg",
+    "name": "Producto 16",
+    "price": 240,
+    "quantity": 4,
+    "available": true,
+    "description": "Descripción del producto 16",
+    "type": "tipoB",
+    "businessId": { "$oid": "6834a2f39ca0cf45f39f041d" },
+    "isDeleted": false
+  },
+  {
+    "image": "https://example.com/image17.jpg",
+    "name": "Producto 17",
+    "price": 270,
+    "quantity": 1,
+    "available": true,
+    "description": "Descripción del producto 17",
+    "type": "tipoB",
+    "businessId": { "$oid": "6834a2f39ca0cf45f39f041d" },
+    "isDeleted": false
+  },
+  {
+    "image": "https://example.com/image18.jpg",
+    "name": "Producto 18",
+    "price": 105,
+    "quantity": 17,
+    "available": true,
+    "description": "Descripción del producto 18",
+    "type": "tipoC",
+    "businessId": { "$oid": "6834a2f39ca0cf45f39f041d" },
+    "isDeleted": false
+  },
+  {
+    "image": "https://example.com/image19.jpg",
+    "name": "Producto 19",
+    "price": 115,
+    "quantity": 18,
+    "available": true,
+    "description": "Descripción del producto 19",
+    "type": "tipoC",
+    "businessId": { "$oid": "6834a2f39ca0cf45f39f041d" },
+    "isDeleted": false
+  },
+  {
+    "image": "https://example.com/image20.jpg",
+    "name": "Producto 20",
+    "price": 125,
+    "quantity": 19,
+    "available": true,
+    "description": "Descripción del producto 20",
+    "type": "tipoC",
+    "businessId": { "$oid": "6834a2f39ca0cf45f39f041d" },
+    "isDeleted": false
+  }
+]

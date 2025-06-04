@@ -9,7 +9,8 @@ async function bootstrap() {
     origin: [
       'https://www.ecommerce-business.com.mx',
       'https://www.ecommerce-go.com.mx',
-      'http://localhost:3001',
+      'https://www.ecommerce-delivery.com.mx',
+      'https://dash-core-nu.vercel.app',
     ],
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     credentials: true,

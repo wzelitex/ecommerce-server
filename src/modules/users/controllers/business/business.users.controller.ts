@@ -3,6 +3,7 @@ import {
   Controller,
   Get,
   Patch,
+  Post,
   Query,
   Req,
   UploadedFile,
@@ -45,7 +46,8 @@ export class BusinessUsersController {
   @UseInterceptors(FileInterceptor('image'))
   postAddComplement(
     @UploadedFile() file: Express.Multer.File,
-    @Body() data: { description: string; image: string },
+    @Body()
+    data: { description: string; image: string; owner: string; number: number },
     @Req() req: Request,
   ) {
     return this.businessUsersService.putAddComplement(
@@ -55,11 +57,43 @@ export class BusinessUsersController {
     );
   }
 
+  @Post('post/send/credentials')
+  postSendCredentails(@Req() req: Request) {
+    return this.businessUsersService.postSendCredentails(req.user.userId);
+  }
+
   @Patch('put/info')
   putInfo(@Req() req: Request, @Body() data: UpdateUsersDto) {
     return this.businessUsersService.putInfo(req.user.userId, {
       ...data,
       password: '',
     });
+  }
+
+  @Patch('put/password')
+  putPassword(
+    @Req() req: Request,
+    @Body() data: { password: string; confirmPassword: string },
+  ) {
+    return this.businessUsersService.putPassword(
+      req.user.userId,
+      data.password,
+    );
+  }
+
+  @Get('get/code')
+  getCode(@Req() req: Request) {
+    return this.businessUsersService.getCode(req.user.userId);
+  }
+
+  @Post('post/validate/password')
+  postValidatePassword(
+    @Req() req: Request,
+    @Body() data: { password: string; confirmPassword: string },
+  ) {
+    return this.businessUsersService.postValidatePassword(
+      req.user.userId,
+      data.password,
+    );
   }
 }

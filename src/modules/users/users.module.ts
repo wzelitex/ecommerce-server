@@ -4,6 +4,7 @@ import {
   UserBusinessSchemaFactory,
   UserClientSchemaFactory,
   UserDeliverySchemaFactory,
+  UserWorkerSchemaFactory,
 } from './schema/users.schema';
 import { UtilsModule } from '../utils/utils.module';
 import { ShoppingsModule } from '../shoppings/shoppings.module';
@@ -42,6 +43,7 @@ import { InternalUsersService } from './utils/internal/internal.users.service';
         name: 'Delivery',
         schema: UserDeliverySchemaFactory,
       },
+      { name: 'Worker', schema: UserWorkerSchemaFactory },
     ]),
     /* utils */
     UtilsModule,

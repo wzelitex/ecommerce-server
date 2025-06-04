@@ -1,4 +1,4 @@
-import { BalanceSchema } from '../../schema/balance.shcema';
+import { BalanceSchema } from '../../schema/balance.schema';
 import { BalanceInterfaceRequest } from '../balance.interface';
 
 /**

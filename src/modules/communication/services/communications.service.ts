@@ -31,6 +31,23 @@ export class CommunicationsService {
     );
   }
 
+  async getNotificationsBusiness(userId: string, offset: string) {
+    const notifications = await this.contactsModel
+      .find({ to: new Types.ObjectId(userId) }, { date: 1, message: 1 })
+      .populate('from', 'email')
+      .skip(parseInt(offset))
+      .limit(15)
+      .lean();
+
+    if (notifications.length === 0)
+      return this.responseService.error(404, 'Notifications no found.');
+    return this.responseService.success(
+      200,
+      'Notifications found.',
+      notifications,
+    );
+  }
+
   async getNotifications(userId: string, offset: string) {
     const notifications = await this.contactsModel
       .find({ from: new Types.ObjectId(userId) })
@@ -38,7 +55,7 @@ export class CommunicationsService {
       .limit(15)
       .lean();
 
-    if (!notifications)
+    if (notifications.length === 0)
       return this.responseService.error(404, 'Notifications no found.');
     return this.responseService.success(
       200,

@@ -25,8 +25,8 @@ export class BusinessOrdersService implements BusinessOrdersServiceInterface {
   ) {
     const orders = await this.ordersModel
       .find({ businessId: new Types.ObjectId(userId), stateOrder: type })
-      .limit(limit ?? this.limitDocument)
-      .skip(parseInt(offset, 10))
+      .limit(this.limitDocument)
+      .skip(parseInt(offset, 10) * 10)
       .populate('productId', 'name image price')
       .populate('userId', 'name');
 
@@ -45,6 +45,13 @@ export class BusinessOrdersService implements BusinessOrdersServiceInterface {
         path: 'orderId',
         populate: {
           path: 'productId',
+          select: 'name',
+        },
+      })
+      .populate({
+        path: 'orderId',
+        populate: {
+          path: 'userId',
           select: 'name',
         },
       });
@@ -86,9 +93,47 @@ export class BusinessOrdersService implements BusinessOrdersServiceInterface {
     return this.responseService.success(200, 'Pedido cancelado correctamente.');
   }
 
+  async getOrdersAssigned(id: string, offset: string) {
+    const businessId = new Types.ObjectId(id);
+
+    const orders = await this.ordersOffersModel
+      .find(
+        { businessId, state: 'accepted' },
+        { deliveryId: 1, date: 1, price: 1 },
+      )
+      .populate('deliveryId', 'name')
+      .skip(parseInt(offset) * 10)
+      .limit(this.limitDocument)
+      .lean();
+
+    if (orders.length === 0)
+      return this.responseService.error(404, 'Orders assigned no found.');
+    return this.responseService.success(200, 'Orders assigned found.', orders);
+  }
+
+  async getDeliveryAssigned(id: string) {
+    const order = await this.ordersOffersModel
+      .findById(id)
+      .populate(
+        'deliveryId',
+        'name phone email image lada street cologne zipCode number state municipality country',
+      )
+      .populate({
+        path: 'orderId',
+        select: 'quantity total productId additionalData',
+        populate: {
+          path: 'productId',
+          select: 'price name color',
+        },
+      })
+      .lean();
+    if (!order) return this.responseService.error(404, 'Order no found.');
+    return this.responseService.success(200, 'Order found.', order);
+  }
+
   async acceptDeliveryOffer(id: string) {
     const order = await this.ordersOffersModel.findOneAndUpdate(
-      { deliveryId: new Types.ObjectId(id) },
+      { orderId: new Types.ObjectId(id) },
       { state: 'accepted' },
       { new: true },
     );
@@ -96,7 +141,17 @@ export class BusinessOrdersService implements BusinessOrdersServiceInterface {
     if (!order)
       return this.responseService.error(404, 'Repartidor no encontrado.');
 
-    await this.ordersOffersModel.deleteMany({ state: 'pending' });
+    await this.ordersModel.findByIdAndUpdate(
+      new Types.ObjectId(order.orderId),
+      {
+        stateOrder: 'accepted',
+      },
+    );
+
+    await this.ordersOffersModel.deleteMany({
+      state: 'pending',
+      orderId: new Types.ObjectId(order.orderId),
+    });
     return this.responseService.success(200, 'Repartidor aceptado.');
   }
 }

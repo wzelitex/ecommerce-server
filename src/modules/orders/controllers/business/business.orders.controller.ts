@@ -47,4 +47,17 @@ export class BusinessOrdersController {
   acceptDelivery(@Query('id') id: string) {
     return this.businessOrdersService.acceptDeliveryOffer(id);
   }
+
+  @Get('get/orders/assigned')
+  getOrdersAssigned(@Req() req: Request, @Query('offset') offset: string) {
+    return this.businessOrdersService.getOrdersAssigned(
+      req.user.userId,
+      offset,
+    );
+  }
+
+  @Get('get/delivery/assigned')
+  getDeliveryAssigned(@Query('id') id: string) {
+    return this.businessOrdersService.getDeliveryAssigned(id);
+  }
 }

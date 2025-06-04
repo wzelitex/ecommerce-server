@@ -22,6 +22,17 @@ export class CommunicationsController {
     return this.contactsService.postContact(body, req.user.userId);
   }
 
+  @Get('get/notifications/business')
+  getNotificationsBusiness(
+    @Req() req: Request,
+    @Query('offset') offset: string,
+  ) {
+    return this.contactsService.getNotificationsBusiness(
+      req.user.userId,
+      offset,
+    );
+  }
+
   @Get('get/notifications')
   getNotifications(@Req() req: Request, @Query('offset') offset: string) {
     return this.contactsService.getNotifications(req.user.userId, offset);

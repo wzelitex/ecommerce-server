@@ -34,8 +34,9 @@ export class BusinessProductsService
         { businessId: new Types.ObjectId(id), isDeleted: isDeleted },
         { _id: 1, name: 1, price: 1, quantity: 1 },
       )
-      .limit(30)
-      .skip(parseInt(offset, 10) * 10);
+      .limit(this.limitDocument)
+      .skip(parseInt(offset, 10) * 10)
+      .lean();
 
     if (!products || products.length === 0)
       return this.responseService.error(404, 'Productos no encontrados.');

@@ -14,7 +14,7 @@ export interface NewUserCollectionInterface {
   password: string;
   phone: number;
   lada: number;
-  type: 'client' | 'business' | 'delivery';
+  type: 'client' | 'business' | 'delivery' | 'worker';
 }
 
 export interface PayloadUserInterface {

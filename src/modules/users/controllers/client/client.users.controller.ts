@@ -20,7 +20,6 @@ export class ClientUsersController {
 
   @Get('get/email')
   getEmail(@Req() req: Request) {
-    console.log(req.user.userId);
     return this.clientUsersService.getEmail(req.user.userId);
   }
 

@@ -1,3 +1,5 @@
+import { Types } from 'mongoose';
+
 /* interface base user */
 export interface CreateUserInterface {
   name: string;
@@ -38,10 +40,27 @@ export interface BusinessInterface
 export interface ClientInterface
   extends LocationUserInterface,
     NetWorksUsersInterface,
-    CreateUserInterface {}
+    CreateUserInterface {
+  _id: string;
+}
 
 export interface CreateUserInterfaceDocument
   extends CreateUserInterface,
     Document {
   _id: string;
+}
+
+export interface DeliveryInterface
+  extends LocationUserInterface,
+    CreateUserInterface {}
+
+export interface CreateUserWorker extends CreateUserInterface {
+  businessId: Types.ObjectId;
+}
+
+export interface ReturnBusinessDetailsToPay {
+  _id: string;
+  name: string;
+  ownerAccount: string;
+  numberAccount: number;
 }

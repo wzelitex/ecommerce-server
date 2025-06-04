@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Model } from 'mongoose';
+import { Model, Types } from 'mongoose';
 import { UserBaseSchema } from '../users/schema/users.schema';
 import { InjectModel } from '@nestjs/mongoose';
 import { JwtService } from '@nestjs/jwt';
@@ -7,7 +7,12 @@ import {
   NewUserCollectionInterface,
   PayloadUserInterface,
 } from './interface/interface.login';
-import { LoginDto, SignupBusinessDto, SignupClientDto } from './dto/auth.dto';
+import {
+  LoginDto,
+  SignupBusinessDto,
+  SignupClientDto,
+  SignupWorkerDto,
+} from './dto/auth.dto';
 import { ResponseService } from '../utils/services/response.service';
 import { EncryptService } from '../utils/services/encrypt.service';
 import { SanitizeService } from '../utils/services/sanitize.service';
@@ -88,6 +93,53 @@ export class AuthService {
     return this.responseService.success(201, 'User created successfully', {
       access_token: accessToken,
       refresh_token: refreshToken,
+      rol: 'delivery',
+    });
+  }
+
+  async signupWorker(data: SignupWorkerDto) {
+    const user = await this.findUser(data.email);
+    if (user) return this.responseService.error(409, 'user exist');
+
+    const business = await this.usersService.findBusiness(data.businessId);
+
+    if (!business) return this.responseService.error(404, 'Business no found.');
+
+    if (business.code !== data.code)
+      return this.responseService.error(409, 'Code dont match.');
+
+    const passwordHashed = await this.encryptService.hasher(data.password);
+
+    const newUser = await this.usersService.createWorker({
+      password: passwordHashed,
+      email: data.email,
+      lada: data.lada,
+      name: data.name,
+      phone: data.phone,
+      businessId: new Types.ObjectId(data.businessId),
+    });
+
+    await this.newUsersCollection({
+      lada: data.lada,
+      phone: data.phone,
+      email: data.email,
+      password: passwordHashed,
+      type: 'worker',
+      userId: newUser._id.toString(),
+    });
+
+    const accessToken = await this.generateNewTokenAccess(
+      newUser._id,
+      data.email,
+      'delivery',
+    );
+
+    const refreshToken = await this.generateNewTokenRefresh(newUser._id);
+
+    return this.responseService.success(201, 'User created successfully', {
+      access_token: accessToken,
+      refresh_token: refreshToken,
+      rol: 'worker',
     });
   }
 
@@ -152,6 +204,7 @@ export class AuthService {
     return this.responseService.success(201, 'User created successfully.', {
       access_token: token_access,
       refresh_token: token_refresh,
+      rol: 'client',
     });
   }
 
@@ -162,10 +215,15 @@ export class AuthService {
     if (user) return this.responseService.error(201, 'User exist.');
 
     const hashedPassword = await this.encryptService.hasher(password);
-    const newBusiness = await this.usersService.createBusiness({
-      ...signupData,
-      password: hashedPassword,
-    });
+    const code = this.generateCode();
+
+    const newBusiness = await this.usersService.createBusiness(
+      {
+        ...signupData,
+        password: hashedPassword,
+      },
+      code,
+    );
 
     await this.newUsersCollection({
       password: hashedPassword,
@@ -201,7 +259,7 @@ export class AuthService {
       { userId, rol, email: email },
       {
         secret: process.env.AUTH_SECRET,
-        expiresIn: '1d',
+        expiresIn: '15d',
       },
     );
   }
@@ -219,12 +277,26 @@ export class AuthService {
   // POST new User collection users
   private async newUsersCollection(data: NewUserCollectionInterface) {
     this.sanitizeService.sanitizeString(data.email);
-    const newUser = new this.authModel(data);
+    const newUser = new this.authModel({
+      ...data,
+      userId: new Types.ObjectId(data.userId),
+    });
     await newUser.save();
     return newUser;
   }
 
   private async findUser(correo: string) {
     return await this.authModel.findOne({ email: correo });
+  }
+
+  private generateCode(): string {
+    const charset =
+      'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    let code = '';
+    for (let i = 0; i < 5; i++) {
+      const randomIndex = Math.floor(Math.random() * charset.length);
+      code += charset[randomIndex];
+    }
+    return code;
   }
 }

@@ -12,9 +12,9 @@ import { ShoppingsModule } from './modules/shoppings/shoppings.module';
 import { UsersModule } from './modules/users/users.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { RecomendationsModule } from './modules/recomendations/recomendations.module';
-import { PaymentsModule } from './modules/payments/payments.module';
 import { CommunicationsModule } from './modules/communication/communication.module';
 import { PlataformModule } from './modules/plataform/plataform.module';
+import { ChecksModule } from './modules/checks/checks.module';
 
 /*
 
@@ -34,7 +34,7 @@ export class AppController {
 
 @Module({
   imports: [
-    MongooseModule.forRoot(process.env.MONGODB_URL!),
+    MongooseModule.forRoot('mongodb://localhost:27017/ecommerces'),
     ConfigModule.forRoot({
       isGlobal: true,
     }),
@@ -44,9 +44,9 @@ export class AppController {
     UsersModule,
     AuthModule,
     RecomendationsModule,
-    PaymentsModule,
     CommunicationsModule,
     PlataformModule,
+    ChecksModule,
   ],
   controllers: [AppController],
 })

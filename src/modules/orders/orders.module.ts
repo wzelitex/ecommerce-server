@@ -5,8 +5,8 @@ import { OrdersOffersSchemaFactory } from './schema/orders.offers.schema';
 import { UtilsModule } from '../utils/utils.module';
 import { ShoppingsModule } from '../shoppings/shoppings.module';
 import { ProductsModule } from '../products/products.module';
-import { PaymentsModule } from '../payments/payments.module';
 import { UsersModule } from '../users/users.module';
+import { ChecksModule } from '../checks/checks.module';
 
 /* import controllers */
 import { BusinessOrdersController } from './controllers/business/business.orders.controller';
@@ -37,8 +37,8 @@ import { InternalSpecialOrdersService } from './utils/internal/special/internal.
     UtilsModule,
     ShoppingsModule,
     ProductsModule,
-    PaymentsModule,
     UsersModule,
+    ChecksModule,
   ],
   controllers: [
     BusinessOrdersController,

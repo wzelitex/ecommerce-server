@@ -51,3 +51,25 @@ export class SignupBusinessDto extends LoginDto {
   @IsNotEmpty()
   lada: number;
 }
+
+export class SignupWorkerDto extends LoginDto {
+  @IsString()
+  @IsNotEmpty()
+  name: string;
+
+  @IsNumber()
+  @IsNotEmpty()
+  phone: number;
+
+  @IsNumber()
+  @IsNotEmpty()
+  lada: number;
+
+  @IsString()
+  @IsNotEmpty()
+  businessId: string;
+
+  @IsString()
+  @IsNotEmpty()
+  code: string;
+}

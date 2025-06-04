@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
-import { BalanceSchemaFactory } from './schema/balance.shcema';
+import { BalanceSchemaFactory } from './schema/balance.schema';
 
 import { ResponseService } from './services/response.service';
 import { CloudinaryService } from './services/image.service';

@@ -7,12 +7,14 @@ import {
   UserBusinessSchema,
   UserClientSchema,
   UserDeliverySchema,
+  UserWorkerSchema,
 } from '../../schema/users.schema';
 import {
   CreateUserInterface,
   CreateUserInterfaceDocument,
+  CreateUserWorker,
+  ReturnBusinessDetailsToPay,
 } from '../../interface/users.interface';
-import { parse } from 'path';
 
 @Injectable()
 export class ExternalUsersService {
@@ -24,17 +26,27 @@ export class ExternalUsersService {
     private readonly businessModel: Model<UserBusinessSchema>,
     @InjectModel('Delivery')
     private readonly deliveryModel: Model<UserDeliverySchema>,
+    @InjectModel('Worker') private readonly worksModel: Model<UserWorkerSchema>,
     private readonly sanitizeService: SanitizeService,
   ) {}
+
+  async getBusinessDetailsToPay(id: string) {
+    const idBusiness = new Types.ObjectId(id);
+    return await this.businessModel
+      .findById(idBusiness, {
+        _id: 1,
+        name: 1,
+        ownerAccount: 1,
+        numberAccount: 1,
+      })
+      .lean<ReturnBusinessDetailsToPay>();
+  }
 
   async getBusinessSearched(text: string, offset: string) {
     return await this.businessModel.aggregate([
       {
         $match: {
-          $or: [
-            { name: { $regex: text, $options: 'i' } },
-            { description: { $regex: text, $options: 'i' } },
-          ],
+          $or: [{ name: { $regex: text, $options: 'i' } }],
         },
       },
       {
@@ -48,11 +60,12 @@ export class ExternalUsersService {
 
   async createBusiness(
     data: CreateUserInterface,
+    code: string,
   ): Promise<CreateUserInterfaceDocument> {
     this.sanitizeService.sanitizeString(data.name);
     this.sanitizeService.sanitizeString(data.email);
 
-    const newDocument = new this.businessModel(data);
+    const newDocument = new this.businessModel({ ...data, code: code });
     await newDocument.save();
 
     return newDocument.toObject() as unknown as CreateUserInterfaceDocument;
@@ -73,6 +86,19 @@ export class ExternalUsersService {
     this.sanitizeService.sanitizeString(data.email);
 
     const newDocument = new this.deliveryModel(data);
+    await newDocument.save();
+
+    return newDocument.toObject() as unknown as CreateUserInterfaceDocument;
+  }
+
+  async createWorker(data: CreateUserWorker) {
+    this.sanitizeService.sanitizeString(data.email);
+    this.sanitizeService.sanitizeString(data.name);
+
+    const newDocument = new this.worksModel({
+      ...data,
+      businessId: new Types.ObjectId(data.businessId),
+    });
     await newDocument.save();
 
     return newDocument.toObject() as unknown as CreateUserInterfaceDocument;
@@ -118,5 +144,11 @@ export class ExternalUsersService {
       municipality: 1,
       country: 1,
     });
+  }
+
+  async findBusiness(id: string) {
+    return await this.businessModel
+      .findById(new Types.ObjectId(id), { email: 1, code: 1 })
+      .lean();
   }
 }

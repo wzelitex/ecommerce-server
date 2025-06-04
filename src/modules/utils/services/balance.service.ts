@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { Model, Types } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
-import { BalanceSchema } from '../schema/balance.shcema';
+import { BalanceSchema } from '../schema/balance.schema';
 import { BalanceInterfaceRequest } from '../interfaces/balance.interface';
 import { BalanceServiceInterface } from '../interfaces/services/utils.interface';
 
@@ -27,6 +27,7 @@ export class BalanceService implements BalanceServiceInterface {
         userId: new Types.ObjectId(userId),
       })
       .skip(parseInt(offset))
-      .limit(this.limitDocuments);
+      .limit(this.limitDocuments)
+      .lean();
   }
 }

@@ -18,7 +18,7 @@ export class CloudinaryService {
 
   async uploadFile(
     file: Express.Multer.File,
-    folderName: 'business' | 'products',
+    folderName: 'business' | 'products' | 'payments',
   ): Promise<UploadApiResponse> {
     return new Promise((resolve, reject) => {
       const uploadStream = cloudinary.uploader.upload_stream(

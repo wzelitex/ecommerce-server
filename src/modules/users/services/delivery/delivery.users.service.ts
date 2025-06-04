@@ -1,10 +1,13 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Req } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
 import { UserDeliverySchema } from '../../schema/users.schema';
 import { ResponseService } from 'src/modules/utils/services/response.service';
 import { DeliveryUserServiceInterface } from '../../interface/services/delivery.users.interface';
-import { UpdateInfoDeliveryDto } from '../../dto/update.users.dto';
+import {
+  AddLocationUserDto,
+  UpdateInfoDeliveryDto,
+} from '../../dto/update.users.dto';
 import { SanitizeService } from 'src/modules/utils/services/sanitize.service';
 
 @Injectable()
@@ -31,6 +34,7 @@ export class DeliveryUserService implements DeliveryUserServiceInterface {
     const user = await this.deliveryModel.findById(new Types.ObjectId(userId), {
       name: 1,
       _id: 1,
+      image: 1,
     });
 
     if (!user)
@@ -60,5 +64,20 @@ export class DeliveryUserService implements DeliveryUserServiceInterface {
       200,
       'Usuario actualizado correctamente.',
     );
+  }
+
+  async putAddLocation(id: string, data: AddLocationUserDto) {
+    const user = await this.deliveryModel.findByIdAndUpdate(id, {
+      country: data.country,
+      street: data.street,
+      state: data.state,
+      cologne: data.cologne,
+      zipCode: data.zipCode,
+      number: data.number,
+      municipality: data.municipality,
+    });
+
+    if (!user) return this.responseService.error(404, 'User no found.');
+    return this.responseService.success(200, 'User updated.');
   }
 }

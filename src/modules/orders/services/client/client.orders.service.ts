@@ -6,8 +6,11 @@ import { ResponseService } from 'src/modules/utils/services/response.service';
 import { ClientOrdersServiceInterface } from '../../interface/services/client.orders.interface';
 import { InternalCommonOrdersService } from '../../utils/internal/common/internal.common.orders.service';
 import { ExternalShoppingsService } from 'src/modules/shoppings/utils/external/external.shoppings.service';
-import { ExternalPaymentsService } from 'src/modules/payments/utils/external/external.payments.service';
-import { ExternalUsersService } from 'src/modules/users/utils/external/external.users.service';
+import {
+  OrdersInterface,
+  OrdersInterfaceIdPopulated,
+} from '../../interface/orders.interface';
+import { ChecksService } from 'src/modules/checks/services/checks.service';
 
 @Injectable()
 export class ClientOrdersService implements ClientOrdersServiceInterface {
@@ -15,14 +18,16 @@ export class ClientOrdersService implements ClientOrdersServiceInterface {
     @InjectModel('Orders') private readonly ordersModel: Model<OrderSchema>,
     private readonly responseService: ResponseService,
     private readonly shoppingsService: ExternalShoppingsService,
-    private readonly paymentsService: ExternalPaymentsService,
     private readonly internalService: InternalCommonOrdersService,
-    private readonly usersService: ExternalUsersService,
+    private readonly checksService: ChecksService,
   ) {}
 
   private readonly limitDocuments = 10;
 
   async historyOrders(userId: string, offset: string, limit?: number) {
+    const skip = parseInt(offset, 10) * this.limitDocuments;
+    const docsLimit = limit ?? this.limitDocuments;
+
     const orders = await this.ordersModel
       .find(
         { userId: new Types.ObjectId(userId) },
@@ -30,8 +35,8 @@ export class ClientOrdersService implements ClientOrdersServiceInterface {
       )
       .populate('businessId', 'name')
       .populate('productId', 'name image')
-      .limit(limit ?? this.limitDocuments)
-      .skip(parseInt(offset, 10));
+      .limit(docsLimit)
+      .skip(skip);
 
     if (!orders || orders.length === 0)
       return this.responseService.error(404, 'Pedidos no encontrados.');
@@ -44,28 +49,24 @@ export class ClientOrdersService implements ClientOrdersServiceInterface {
     if (!shoppings || shoppings.length === 0)
       return this.responseService.error(404, 'Compras no encontradas.');
 
-    const ordersCreated =
-      await this.internalService.createArrayDocuments(shoppings);
+    const ordersCreated = await this.internalService.createArrayDocuments(
+      shoppings as unknown as OrdersInterface[],
+    );
 
-    const OrdersSaved = await this.ordersModel.insertMany(ordersCreated);
-    const plainOrders = OrdersSaved.map((doc) => doc.toObject() as OrderSchema);
+    // create orders documents
+    const OrdersSaved = (await this.ordersModel.insertMany(
+      ordersCreated,
+    )) as unknown as OrdersInterfaceIdPopulated[];
 
-    const newArray =
-      await this.paymentsService.createArrayForPreference(plainOrders);
+    const response = await this.checksService.postCreateCheck(OrdersSaved);
 
-    const user = await this.usersService.getInfoPayer(userId);
-
-    // const preferenceId = await this.paymentsService.createPreference(
-    //   newArray,
-    //   user,
-    // );
-
+    // delete all shoppings from cart
     await this.shoppingsService.deleteShoppingsFromCart(userId);
 
     return this.responseService.success(
       201,
       'Pedidos creados exitosamente.',
-      // preferenceId,
+      response,
     );
   }
 }

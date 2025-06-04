@@ -3,7 +3,6 @@ import { Model } from 'mongoose';
 import { OrderSchema } from '../../../schema/orders.schema';
 import { InjectModel } from '@nestjs/mongoose';
 import { OrdersInterfaceIdPopulated } from '../../../interface/orders.interface';
-import { InterfaceItemsPaymet } from 'src/modules/payments/interface/payment.interfac';
 import { ExternalUsersService } from 'src/modules/users/utils/external/external.users.service';
 
 @Injectable()

@@ -1,5 +1,6 @@
 import { CommonResponseInterface } from 'src/interface/response.interface';
 import { ClientInterface } from '../../interface/users.interface';
+import { UpdateUsersDto } from '../../dto/update.users.dto';
 
 /**
  * Interface defining the structure for client user operations.
@@ -30,7 +31,7 @@ export interface ClientUsersServiceInterface {
    */
   putInfo(
     userId: string,
-    data: ClientInterface,
+    data: UpdateUsersDto,
   ): Promise<CommonResponseInterface>;
 
   /**

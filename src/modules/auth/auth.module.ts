@@ -25,7 +25,7 @@ dotenv.config();
       global: true,
       secret: process.env.AUTH_SECRET,
       signOptions: {
-        expiresIn: '1d',
+        expiresIn: '15d',
       },
     }),
     UtilsModule,

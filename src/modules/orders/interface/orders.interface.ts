@@ -3,6 +3,7 @@ import { CreateProductShoeInterface } from 'src/modules/products/interface/funct
 import {
   BusinessInterface,
   ClientInterface,
+  DeliveryInterface,
 } from 'src/modules/users/interface/users.interface';
 
 export interface OrdersInterface {
@@ -12,7 +13,7 @@ export interface OrdersInterface {
   quantity: number;
   date?: Date;
   total: number;
-  additionalData?: Record<string, any>;
+  additionalData: Record<string, any>;
 }
 
 export type OrdersInterfaceIdPopulated = Omit<
@@ -26,3 +27,20 @@ export type OrdersInterfaceIdPopulated = Omit<
 };
 
 export type OrderDocumentInterface = OrdersInterface & Document;
+
+export interface OrdersDelivery {
+  _id: string;
+  deliveryId: DeliveryInterface;
+  orderId: OrdersInterface;
+  businessId: BusinessInterface;
+  userId: ClientInterface;
+  price: number;
+  state: 'accepted' | 'pending';
+  date: Date;
+}
+
+export interface PopulateBusinessArray {
+  businessId: string;
+  quantity: number;
+  total: number;
+}

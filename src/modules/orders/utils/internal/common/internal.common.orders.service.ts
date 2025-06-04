@@ -2,10 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { Model, UpdateQuery } from 'mongoose';
 import { OrderSchema } from '../../../schema/orders.schema';
 import { InjectModel } from '@nestjs/mongoose';
-import {
-  OrdersInterface,
-  OrdersInterfaceIdPopulated,
-} from '../../../interface/orders.interface';
+import { OrdersInterface } from '../../../interface/orders.interface';
 import { ExternalProductsService } from 'src/modules/products/utils/external/external.products.service';
 
 @Injectable()
@@ -39,7 +36,7 @@ export class InternalCommonOrdersService {
         quantity: shopping.quantity,
         total: shopping.quantity * product.price,
         userId: shopping.userId,
-        additionalData: shopping.additionalData,
+        additionalData: shopping.additionalData as { size: string },
       });
     }
 

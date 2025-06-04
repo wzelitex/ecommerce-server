@@ -7,7 +7,6 @@ import {
   UserClientSchema,
 } from '../../schema/users.schema';
 import { ResponseService } from 'src/modules/utils/services/response.service';
-import { ClientInterface } from '../../interface/users.interface';
 import { BusinessUsersService } from '../business/business.users.service';
 import { ClientUsersServiceInterface } from '../../interface/services/client.users.interface';
 import { ExternalShoppingsService } from 'src/modules/shoppings/utils/external/external.shoppings.service';
@@ -15,6 +14,7 @@ import { InternalUsersService } from '../../utils/internal/internal.users.servic
 import { GetBusinessRecommendInterface } from '../../interface/arrays/clients.arrays.interface';
 import { ExternalCommunicationsService } from 'src/modules/communication/utils/external/external.communications.service';
 import { EncryptService } from 'src/modules/utils/services/encrypt.service';
+import { UpdateUsersDto } from '../../dto/update.users.dto';
 
 @Injectable()
 export class ClientUsersService implements ClientUsersServiceInterface {
@@ -86,7 +86,7 @@ export class ClientUsersService implements ClientUsersServiceInterface {
     return this.responseService.success(200, 'Code sent.', code);
   }
 
-  async putInfo(userId: string, data: ClientInterface) {
+  async putInfo(userId: string, data: UpdateUsersDto) {
     const user = await this.usersModel.findByIdAndUpdate(userId, data);
     if (!user) return this.responseService.error(404, 'Usuario no encontrado.');
     return this.responseService.success(200, 'Usuario actualizado.');
