@@ -68,7 +68,7 @@ export class BusinessUsersService implements BusinessUsersServiceInterface {
   }
 
   async getInfo(userId: string) {
-    const user = await this.usersModel.findById(userId, {
+    const user = await this.usersModel.findById(new Types.ObjectId(userId), {
       password: 0,
     });
 

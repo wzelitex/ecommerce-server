@@ -73,14 +73,17 @@ export class AuthService {
       phone: data.phone,
     });
 
-    await this.newUsersCollection({
-      lada: data.lada,
-      phone: data.phone,
-      email: data.email,
-      password: passwordHashed,
-      type: 'delivery',
-      userId: newDelivery._id.toString(),
-    });
+    await this.newUsersCollection(
+      {
+        lada: data.lada,
+        phone: data.phone,
+        email: data.email,
+        password: passwordHashed,
+        type: 'delivery',
+        userId: newDelivery._id.toString(),
+      },
+      'Delivery',
+    );
 
     const accessToken = await this.generateNewTokenAccess(
       newDelivery._id,
@@ -119,14 +122,17 @@ export class AuthService {
       businessId: new Types.ObjectId(data.businessId),
     });
 
-    await this.newUsersCollection({
-      lada: data.lada,
-      phone: data.phone,
-      email: data.email,
-      password: passwordHashed,
-      type: 'worker',
-      userId: newUser._id.toString(),
-    });
+    await this.newUsersCollection(
+      {
+        lada: data.lada,
+        phone: data.phone,
+        email: data.email,
+        password: passwordHashed,
+        type: 'worker',
+        userId: newUser._id.toString(),
+      },
+      'Worker',
+    );
 
     const accessToken = await this.generateNewTokenAccess(
       newUser._id,
@@ -184,14 +190,17 @@ export class AuthService {
       password: hashedPassword,
     });
 
-    await this.newUsersCollection({
-      email: email,
-      phone: phone,
-      lada: lada,
-      type: 'client',
-      password: hashedPassword,
-      userId: newUser._id,
-    });
+    await this.newUsersCollection(
+      {
+        email: email,
+        phone: phone,
+        lada: lada,
+        type: 'client',
+        password: hashedPassword,
+        userId: newUser._id,
+      },
+      'Client',
+    );
 
     const token_access = await this.generateNewTokenAccess(
       newUser._id,
@@ -225,14 +234,17 @@ export class AuthService {
       code,
     );
 
-    await this.newUsersCollection({
-      password: hashedPassword,
-      email: email,
-      lada: lada,
-      phone: phone,
-      type: 'business',
-      userId: newBusiness._id,
-    });
+    await this.newUsersCollection(
+      {
+        password: hashedPassword,
+        email: email,
+        lada: lada,
+        phone: phone,
+        type: 'business',
+        userId: newBusiness._id,
+      },
+      'Business',
+    );
 
     const access_token = await this.generateNewTokenAccess(
       newBusiness._id,
@@ -275,11 +287,15 @@ export class AuthService {
   }
 
   // POST new User collection users
-  private async newUsersCollection(data: NewUserCollectionInterface) {
+  private async newUsersCollection(
+    data: NewUserCollectionInterface,
+    collectionType: 'Delivery' | 'Business' | 'Worker' | 'Client',
+  ) {
     this.sanitizeService.sanitizeString(data.email);
     const newUser = new this.authModel({
       ...data,
       userId: new Types.ObjectId(data.userId),
+      collectionType: collectionType,
     });
     await newUser.save();
     return newUser;

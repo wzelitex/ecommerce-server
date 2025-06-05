@@ -21,6 +21,7 @@ import { DeliveryOrdersService } from './services/delivery/delivery.orders.servi
 /* import utils */
 import { InternalCommonOrdersService } from './utils/internal/common/internal.common.orders.service';
 import { InternalSpecialOrdersService } from './utils/internal/special/internal.special.orders.service';
+import { PaymentsService } from '../utils/services/payment.service';
 
 @Module({
   imports: [
@@ -46,6 +47,7 @@ import { InternalSpecialOrdersService } from './utils/internal/special/internal.
     DeliveryOrdersController,
   ],
   providers: [
+    PaymentsService,
     BusinessOrdersService,
     ClientOrdersService,
     DeliveryOrdersService,

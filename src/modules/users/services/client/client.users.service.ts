@@ -74,14 +74,14 @@ export class ClientUsersService implements ClientUsersServiceInterface {
 
     const code = this.generateCode();
 
-    // await this.externalCommunicationService.sendBulkNotifications([
-    //   {
-    //     message: code,
-    //     subject: 'Codigo de seguridad.',
-    //     to: user.email,
-    //     type: 'Code security',
-    //   },
-    // ]);
+    await this.externalCommunicationService.sendBulkNotifications([
+      {
+        message: code,
+        subject: 'Codigo de seguridad.',
+        to: user.email,
+        type: 'Code security',
+      },
+    ]);
 
     return this.responseService.success(200, 'Code sent.', code);
   }

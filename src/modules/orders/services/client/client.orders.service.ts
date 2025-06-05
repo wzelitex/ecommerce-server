@@ -11,6 +11,8 @@ import {
   OrdersInterfaceIdPopulated,
 } from '../../interface/orders.interface';
 import { ChecksService } from 'src/modules/checks/services/checks.service';
+import { PaymentsService } from 'src/modules/utils/services/payment.service';
+import { ExternalUsersService } from 'src/modules/users/utils/external/external.users.service';
 
 @Injectable()
 export class ClientOrdersService implements ClientOrdersServiceInterface {
@@ -20,6 +22,8 @@ export class ClientOrdersService implements ClientOrdersServiceInterface {
     private readonly shoppingsService: ExternalShoppingsService,
     private readonly internalService: InternalCommonOrdersService,
     private readonly checksService: ChecksService,
+    private readonly paymentService: PaymentsService,
+    private readonly externalUsersService: ExternalUsersService,
   ) {}
 
   private readonly limitDocuments = 10;

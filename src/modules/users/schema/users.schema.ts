@@ -5,8 +5,11 @@ import { Document, Types } from 'mongoose';
 // Esquema base de los usuarios
 @Schema()
 export class UserBaseSchema extends Document {
-  @Prop({ required: true })
+  @Prop({ type: Types.ObjectId, required: true, refPath: 'collectionType' })
   userId: Types.ObjectId;
+
+  @Prop({ required: true, enum: ['Business', 'Client'] })
+  collectionType: string;
 
   @Prop({ required: true })
   email: string;
