@@ -14,7 +14,7 @@ import { InternalUsersService } from '../../utils/internal/internal.users.servic
 import { GetBusinessRecommendInterface } from '../../interface/arrays/clients.arrays.interface';
 import { ExternalCommunicationsService } from 'src/modules/communication/utils/external/external.communications.service';
 import { EncryptService } from 'src/modules/utils/services/encrypt.service';
-import { UpdateUsersDto } from '../../dto/update.users.dto';
+import { AddLocationUserDto, UpdateUsersDto } from '../../dto/update.users.dto';
 
 @Injectable()
 export class ClientUsersService implements ClientUsersServiceInterface {
@@ -43,7 +43,15 @@ export class ClientUsersService implements ClientUsersServiceInterface {
   }
 
   async getInfo(userId: string) {
-    const user = await this.usersModel.findById(userId);
+    const user = await this.usersMainModel
+      .findOne({
+        userId: new Types.ObjectId(userId),
+      })
+      .populate(
+        'userId',
+        'name email phone lada zipCode street cologne municipality state country',
+      );
+
     if (!user) return this.responseService.error(404, 'Usuario no encontrado.');
     return this.responseService.success(200, 'Usuario encontrado.', user);
   }
@@ -88,6 +96,22 @@ export class ClientUsersService implements ClientUsersServiceInterface {
 
   async putInfo(userId: string, data: UpdateUsersDto) {
     const user = await this.usersModel.findByIdAndUpdate(userId, data);
+    if (!user) return this.responseService.error(404, 'Usuario no encontrado.');
+    return this.responseService.success(200, 'Usuario actualizado.');
+  }
+
+  async putLocation(userId: string, data: AddLocationUserDto) {
+    const user = await this.usersModel
+      .findByIdAndUpdate(userId, {
+        zipCode: data.zipCode,
+        cologne: data.cologne,
+        street: data.street,
+        number: data.number,
+        municipality: data.municipality,
+        state: data.state,
+        country: data.country,
+      })
+      .lean();
     if (!user) return this.responseService.error(404, 'Usuario no encontrado.');
     return this.responseService.success(200, 'Usuario actualizado.');
   }

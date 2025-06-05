@@ -68,11 +68,15 @@ export class BusinessUsersService implements BusinessUsersServiceInterface {
   }
 
   async getInfo(userId: string) {
-    const user = await this.usersModel.findById(new Types.ObjectId(userId), {
-      password: 0,
-    });
+    const user = await this.userMainModel
+      .findOne({ userId: new Types.ObjectId(userId) }, { password: 0 })
+      .populate(
+        'userId',
+        'name email phone lada zipCode street cologne municipality state country',
+      );
 
     if (!user) return this.responseService.error(404, 'Usuario no encontrado.');
+
     return this.responseService.success(200, 'Usuario encontrado.', user);
   }
 

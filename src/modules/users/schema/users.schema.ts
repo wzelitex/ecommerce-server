@@ -5,8 +5,11 @@ import { Document, Types } from 'mongoose';
 // Esquema base de los usuarios
 @Schema()
 export class UserBaseSchema extends Document {
-  @Prop({ type: Types.ObjectId, required: true })
+  @Prop({ type: Types.ObjectId, required: true, refPath: 'collectionType' })
   userId: Types.ObjectId;
+
+  @Prop({ required: true, enum: ['Business', 'Client', 'Delivery', 'Worker'] })
+  collectionType: string;
 
   @Prop({ required: true })
   email: string;
@@ -21,7 +24,7 @@ export class UserBaseSchema extends Document {
   lada: number;
 
   @Prop({ required: true })
-  type: 'client' | 'business' | 'delivery';
+  type: 'client' | 'business' | 'delivery' | 'worker';
 }
 
 export const UserBaseSchemaFactory =
@@ -62,7 +65,7 @@ export class UserClientSchema extends Document {
 
   @Prop({ default: '' })
   state: string;
-  e;
+
   @Prop({ default: '' })
   country: string;
 }

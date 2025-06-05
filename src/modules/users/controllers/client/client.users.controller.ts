@@ -10,7 +10,7 @@ import {
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { Request } from 'express';
-import { UpdateUsersDto } from '../../dto/update.users.dto';
+import { AddLocationUserDto, UpdateUsersDto } from '../../dto/update.users.dto';
 import { ClientUsersService } from '../../services/client/client.users.service';
 
 @UseGuards(AuthGuard('jwt'))
@@ -44,6 +44,11 @@ export class ClientUsersController {
   @Patch('put/info')
   putInfo(@Req() req: Request, @Body() data: UpdateUsersDto) {
     return this.clientUsersService.putInfo(req.user.userId, data);
+  }
+
+  @Patch('put/location')
+  putLocation(@Req() req: Request, @Body() data: AddLocationUserDto) {
+    return this.clientUsersService.putLocation(req.user.userId, data);
   }
 
   @Patch('put/password')
